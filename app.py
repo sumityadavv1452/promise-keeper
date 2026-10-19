@@ -11,7 +11,7 @@ from src.telemetry import TelemetryRecorder
 # 1. Page Configuration & Theme Initialization (Default to Light Mode)
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="Promise Keeper — Wearable AI Engine",
+    page_title="Promise Keeper",
     page_icon="✦",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -216,14 +216,39 @@ CSS_TEMPLATE = """
         color: __TEXT_PRIMARY__ !important;
     }
 
-    /* High-Contrast Sidebar Toggle Button in Both Themes */
-    header[data-testid="stHeader"] {
-        background-color: transparent !important;
-        z-index: 100 !important;
+    /* Suppress Streamlit Chrome Artifacts (Top bar, Deploy button, Hamburger menu, Footer) */
+    [data-testid="stHeader"], header[data-testid="stHeader"] {
+        display: none !important;
+    }
+    .stDeployButton {
+        display: none !important;
+    }
+    #MainMenu {
+        visibility: hidden !important;
+        display: none !important;
+    }
+    footer {
+        display: none !important;
+    }
+    div[data-testid="stDecoration"] {
+        display: none !important;
+    }
+    div[data-testid="stStatusWidget"] {
+        display: none !important;
     }
     
-    header[data-testid="stHeader"] button,
-    header[data-testid="stHeader"] [data-testid="stSidebarCollapsedControl"] button,
+    .block-container {
+        padding-top: 1.2rem !important;
+        padding-bottom: 2.5rem !important;
+        max-width: 1200px;
+    }
+
+    /* Prevent Button Text Truncation */
+    button, .stButton button {
+        white-space: nowrap !important;
+    }
+
+    /* High-Contrast Sidebar Toggle Button in Both Themes */
     [data-testid="stSidebarCollapseButton"] button,
     [data-testid="stSidebarCollapseButton"],
     [data-testid="collapsedControl"] button,
@@ -248,7 +273,6 @@ CSS_TEMPLATE = """
         transition: all 0.15s ease !important;
     }
     
-    header[data-testid="stHeader"] button:hover,
     [data-testid="stSidebarCollapseButton"] button:hover,
     [data-testid="stSidebarCollapseButton"]:hover,
     [data-testid="collapsedControl"] button:hover,
@@ -262,7 +286,6 @@ CSS_TEMPLATE = """
         border-color: __TOGGLE_BORDER__ !important;
     }
 
-    header[data-testid="stHeader"] button svg,
     [data-testid="stSidebarCollapseButton"] button svg,
     [data-testid="stSidebarCollapseButton"] svg,
     [data-testid="collapsedControl"] button svg,
@@ -278,7 +301,6 @@ CSS_TEMPLATE = """
         color: __TOGGLE_COLOR__ !important;
     }
 
-    header[data-testid="stHeader"] button:hover svg,
     [data-testid="stSidebarCollapseButton"] button:hover svg,
     [data-testid="stSidebarCollapseButton"]:hover svg,
     [data-testid="collapsedControl"] button:hover svg,
@@ -290,18 +312,6 @@ CSS_TEMPLATE = """
         fill: __TOGGLE_HOVER_COLOR__ !important;
         stroke: __TOGGLE_HOVER_COLOR__ !important;
         color: __TOGGLE_HOVER_COLOR__ !important;
-    }
-
-    /* Hide unused Streamlit UI chrome */
-    #MainMenu, footer { visibility: hidden !important; }
-    div[data-testid="stDecoration"] { display: none !important; }
-    div[data-testid="stStatusWidget"] { display: none !important; }
-    .stDeployButton { display: none !important; }
-    
-    .block-container {
-        padding-top: 1rem;
-        padding-bottom: 3rem;
-        max-width: 1200px;
     }
     
     /* Top Header & Navbar Container (Inji Playground / Linear Style) */
@@ -871,7 +881,7 @@ with st.sidebar:
 # 4. Top Header & Navbar (Inji Playground / Linear Style)
 # -----------------------------------------------------------------------------
 with st.container(key="top_navbar", border=True):
-    nav_c1, nav_c2, nav_c3 = st.columns([3.8, 3.2, 3.0], vertical_alignment="center")
+    nav_c1, nav_c2, nav_c3 = st.columns([3.6, 2.6, 3.8], vertical_alignment="center")
 
     with nav_c1:
         st.markdown(
@@ -893,7 +903,7 @@ with st.container(key="top_navbar", border=True):
         )
 
     with nav_c3:
-        r_col1, r_col2, r_col3 = st.columns([0.8, 1.1, 1.4], vertical_alignment="center")
+        r_col1, r_col2, r_col3 = st.columns([0.8, 1.0, 1.6], vertical_alignment="center")
         with r_col1:
             st.markdown(
                 '<div style="display: flex; justify-content: flex-end; align-items: center;">'
