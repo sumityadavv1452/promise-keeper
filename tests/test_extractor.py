@@ -61,7 +61,7 @@ def test_offline_mock_extraction():
 
 
 @patch("boto3.client")
-def test_real_bedrock_converse_mocked_success(mock_boto_client):
+def test_real_bedrock_converse_mocked_success(mock_boto_client, monkeypatch):
     """Verify Bedrock converse() API parsing and usage metrics recording."""
     mock_runtime = MagicMock()
     mock_boto_client.return_value = mock_runtime
@@ -99,18 +99,18 @@ def test_real_bedrock_converse_mocked_success(mock_boto_client):
         },
     }
 
-    with patch.dict("os.environ", {"AWS_ACCESS_KEY_ID": "AKIA_MOCK_TEST"}):
-        extractor = BedrockPromiseExtractor(primary_model_id="amazon.nova-pro-v1:0")
-        extractor._client = mock_runtime
+    monkeypatch.setenv("AWS_ACCESS_KEY_ID", "AKIA_MOCK_TEST")
+    extractor = BedrockPromiseExtractor(primary_model_id="amazon.nova-pro-v1:0")
+    extractor._client = mock_runtime
 
-        res = extractor.extract_promises("Sample transcript")
-        assert len(res.promises) == 1
-        item = res.promises[0]
-        assert item.direction == "MADE_TO_ME"
-        assert item.counterparty_name == "Sarah Lin"
-        assert res.telemetry.input_tokens == 350
-        assert res.telemetry.output_tokens == 180
-        assert res.telemetry.estimated_cost_usd > 0
+    res = extractor.extract_promises("Sample transcript")
+    assert len(res.promises) == 1
+    item = res.promises[0]
+    assert item.direction == "MADE_TO_ME"
+    assert item.counterparty_name == "Sarah Lin"
+    assert res.telemetry.input_tokens == 350
+    assert res.telemetry.output_tokens == 180
+    assert res.telemetry.estimated_cost_usd > 0
 
 
 def test_telemetry_cost_calculation():
