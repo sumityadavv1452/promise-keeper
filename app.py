@@ -167,7 +167,7 @@ CSS_TEMPLATE = """
         color: __TEXT_PRIMARY__ !important;
     }
 
-    /* 1. CRITICAL: High-Contrast Sidebar Toggle Button in Both Themes */
+    /* High-Contrast Sidebar Toggle Button in Both Themes */
     header[data-testid="stHeader"] {
         background-color: transparent !important;
         z-index: 100 !important;
@@ -384,42 +384,43 @@ CSS_TEMPLATE = """
         transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
     }
     
-    /* Direction & Status Chips */
-    .badge-primary {
-        background: __BADGE_BY_BG__;
-        border: 1px solid __BADGE_BY_BORDER__;
-        color: __BADGE_BY_TEXT__;
-        font-size: 12px;
-        font-weight: 500;
-        padding: 3px 10px;
-        border-radius: 9999px;
+    /* Headings & Text */
+    h1, h2, h3, h4 {
+        color: __TEXT_PRIMARY__ !important;
+        font-family: 'Inter', sans-serif !important;
     }
-    .badge-secondary {
-        background: __BADGE_TO_BG__;
-        border: 1px solid __BADGE_TO_BORDER__;
-        color: __BADGE_TO_TEXT__;
-        font-size: 12px;
-        font-weight: 500;
-        padding: 3px 10px;
-        border-radius: 9999px;
+    h3 {
+        font-size: 17px !important;
+        font-weight: 650 !important;
+        letter-spacing: -0.01em !important;
+        margin: 8px 0 4px 0 !important;
     }
-    .badge-status {
-        background: __BG_SURFACE__;
-        border: 1px solid __BORDER_COL__;
-        color: __TEXT_SECONDARY__;
-        font-size: 12px;
-        font-weight: 500;
-        padding: 3px 10px;
-        border-radius: 9999px;
+    p, .stMarkdown p {
+        color: __TEXT_BODY__ !important;
+        line-height: 1.55;
     }
-    .badge-status-staged {
-        background: __BADGE_STAGED_BG__;
-        border: 1px solid __BADGE_STAGED_BORDER__;
-        color: __BADGE_STAGED_TEXT__;
-        font-size: 12px;
-        font-weight: 600;
-        padding: 3px 10px;
-        border-radius: 9999px;
+    strong {
+        color: __TEXT_PRIMARY__ !important;
+    }
+    
+    /* Captions */
+    .stCaption, [data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] p, [data-testid="stCaptionContainer"] span {
+        color: __TEXT_SECONDARY__ !important;
+        font-size: 12.5px !important;
+    }
+    [data-testid="stCaptionContainer"] strong {
+        color: __TEXT_PRIMARY__ !important;
+    }
+    
+    /* Inline Code Spans */
+    code {
+        font-family: 'JetBrains Mono', monospace !important;
+        background-color: __BG_SURFACE__ !important;
+        color: __LINK_COLOR__ !important;
+        border: 1px solid __BORDER_COL__ !important;
+        padding: 2px 6px !important;
+        border-radius: 6px !important;
+        font-size: 12px !important;
     }
     
     /* Sidebar Styling (Clean & Decluttered) */
@@ -507,12 +508,21 @@ CSS_TEMPLATE = """
     }
 
     /* Form Inputs */
+    label, [data-testid="stWidgetLabel"] p, [data-testid="stWidgetLabel"] span {
+        color: __TEXT_PRIMARY__ !important;
+        font-weight: 500 !important;
+        font-size: 13px !important;
+    }
     input[type="text"], input[type="number"], textarea, .stSelectbox div[data-baseweb="select"] {
         background-color: __BG_INPUT__ !important;
         border: 1px solid __BORDER_INPUT__ !important;
         border-radius: 8px !important;
         color: __TEXT_PRIMARY__ !important;
         font-size: 13.5px !important;
+    }
+    .stSelectbox div[data-baseweb="select"] * {
+        color: __TEXT_PRIMARY__ !important;
+        background-color: transparent !important;
     }
     input[type="text"]:focus, textarea:focus {
         border-color: #2563EB !important;
@@ -578,14 +588,15 @@ st.markdown(rendered_css, unsafe_allow_html=True)
 # -----------------------------------------------------------------------------
 with st.sidebar:
     st.markdown("### Runtime Daemon")
-    st.markdown("""
-    <div class="sidebar-section">
-        <div class="sidebar-row"><span>Daemon Status</span><span class="sidebar-val" style="color: #10B981;">● Active</span></div>
-        <div class="sidebar-row"><span>Daemon Port</span><span class="sidebar-val">4242</span></div>
-        <div class="sidebar-row"><span>Hardware Node</span><span class="sidebar-val">Pendant 0x91B2</span></div>
-        <div class="sidebar-row"><span>Battery Level</span><span class="sidebar-val">92%</span></div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        '<div class="sidebar-section">'
+        '<div class="sidebar-row"><span>Daemon Status</span><span class="sidebar-val" style="color: #10B981;">● Active</span></div>'
+        '<div class="sidebar-row"><span>Daemon Port</span><span class="sidebar-val">4242</span></div>'
+        '<div class="sidebar-row"><span>Hardware Node</span><span class="sidebar-val">Pendant 0x91B2</span></div>'
+        '<div class="sidebar-row"><span>Battery Level</span><span class="sidebar-val">92%</span></div>'
+        '</div>',
+        unsafe_allow_html=True
+    )
     
     st.markdown("### Bedrock Inference Model")
     model_choice = st.selectbox(
@@ -596,24 +607,26 @@ with st.sidebar:
     )
     
     st.markdown("### Staging Destinations")
-    st.markdown("""
-    <div class="sidebar-section">
-        <p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" class="sidebar-link">✉️ Open Gmail Drafts ↗</a></p>
-        <p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://calendar.google.com/" target="_blank" class="sidebar-link">📅 Open Google Calendar ↗</a></p>
-        <p style="margin: 0; font-size: 13px;"><a href="https://app.todoist.com/" target="_blank" class="sidebar-link">📝 Open Todoist App ↗</a></p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        '<div class="sidebar-section">'
+        '<p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" class="sidebar-link">✉️ Open Gmail Drafts ↗</a></p>'
+        '<p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://calendar.google.com/" target="_blank" class="sidebar-link">📅 Open Google Calendar ↗</a></p>'
+        '<p style="margin: 0; font-size: 13px;"><a href="https://app.todoist.com/" target="_blank" class="sidebar-link">📝 Open Todoist App ↗</a></p>'
+        '</div>',
+        unsafe_allow_html=True
+    )
     
     st.markdown("### Telemetry Session")
     latency_display = st.session_state.get("latency_ms", 284)
     tokens_display = st.session_state.get("tokens_used", 1140)
-    st.markdown(f"""
-    <div class="sidebar-telemetry">
-        <div>Converse API Latency: <strong>{latency_display} ms</strong></div>
-        <div>Tokens Consumed: <strong>{tokens_display:,}</strong></div>
-        <div>Estimated Cost: <strong>$0.0009 USD</strong></div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="sidebar-telemetry">'
+        f'<div>Converse API Latency: <strong>{latency_display} ms</strong></div>'
+        f'<div>Tokens Consumed: <strong>{tokens_display:,}</strong></div>'
+        f'<div>Estimated Cost: <strong>$0.0009 USD</strong></div>'
+        f'</div>',
+        unsafe_allow_html=True
+    )
 
 # -----------------------------------------------------------------------------
 # 4. Top Header & Navbar (Styled exactly like Image 2 / Inji Playground)
@@ -622,30 +635,33 @@ with st.container(key="top_navbar", border=True):
     nav_c1, nav_c2, nav_c3 = st.columns([3.8, 3.2, 3.0], vertical_alignment="center")
 
     with nav_c1:
-        st.markdown(f"""
-        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <span class="brand-title">✦ Promise Keeper</span>
-            <span class="version-pill">Bee v1.4.2 · Bedrock Nova Pro</span>
-        </div>
-        <div class="brand-tagline">“You said it. We’ll remember it.”</div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            '<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">'
+            '<span class="brand-title">✦ Promise Keeper</span>'
+            '<span class="version-pill">Bee v1.4.2 · Bedrock Nova Pro</span>'
+            '</div>'
+            '<div class="brand-tagline">“You said it. We’ll remember it.”</div>',
+            unsafe_allow_html=True
+        )
 
     with nav_c2:
-        st.markdown("""
-        <div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
-            <span class="nav-pill-active">Commitments</span>
-            <span class="nav-pill">Transcript Stream</span>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            '<div style="display: flex; justify-content: center; align-items: center; gap: 8px;">'
+            '<span class="nav-pill-active">Commitments</span>'
+            '<span class="nav-pill">Transcript Stream</span>'
+            '</div>',
+            unsafe_allow_html=True
+        )
 
     with nav_c3:
         r_col1, r_col2, r_col3 = st.columns([1.1, 0.9, 1.4], vertical_alignment="center")
         with r_col1:
-            st.markdown("""
-            <div style="display: flex; justify-content: flex-end; align-items: center;">
-                <span class="live-pill"><span class="green-dot"></span> Live</span>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown(
+                '<div style="display: flex; justify-content: flex-end; align-items: center;">'
+                '<span class="live-pill"><span class="green-dot"></span> Live</span>'
+                '</div>',
+                unsafe_allow_html=True
+            )
         with r_col2:
             # Streamlined theme toggle with strictly ☀️ and 🌙 (no computer icon)
             if current_theme == "Dark":
@@ -678,41 +694,45 @@ with st.container(key="top_navbar", border=True):
 m1, m2, m3, m4 = st.columns(4)
 
 with m1:
-    st.markdown("""
-    <div class="metric-card">
-        <div class="metric-label">Bee Audio Ingestion</div>
-        <div class="metric-val">Active Stream</div>
-        <div class="metric-sub">Sync: 5s · Device: Pendant 0x91B2</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        '<div class="metric-card">'
+        '<div class="metric-label">Bee Audio Ingestion</div>'
+        '<div class="metric-val">Active Stream</div>'
+        '<div class="metric-sub">Sync: 5s · Device: Pendant 0x91B2</div>'
+        '</div>',
+        unsafe_allow_html=True
+    )
 
 with m2:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">Inference Latency</div>
-        <div class="metric-val">{st.session_state.latency_ms} ms</div>
-        <div class="metric-sub">Amazon Bedrock Converse API</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="metric-card">'
+        f'<div class="metric-label">Inference Latency</div>'
+        f'<div class="metric-val">{st.session_state.latency_ms} ms</div>'
+        f'<div class="metric-sub">Amazon Bedrock Converse API</div>'
+        f'</div>',
+        unsafe_allow_html=True
+    )
 
 with m3:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">Token Utilization</div>
-        <div class="metric-val">{st.session_state.tokens_used:,} tokens</div>
-        <div class="metric-sub">$0.0009 USD · Nova Pro</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="metric-card">'
+        f'<div class="metric-label">Token Utilization</div>'
+        f'<div class="metric-val">{st.session_state.tokens_used:,} tokens</div>'
+        f'<div class="metric-sub">$0.0009 USD · Nova Pro</div>'
+        f'</div>',
+        unsafe_allow_html=True
+    )
 
 with m4:
     pending_count = len([p for p in st.session_state.promises if not p["staged"]])
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">Staged Pipeline</div>
-        <div class="metric-val">{pending_count} Pending Review</div>
-        <div class="metric-sub">0 overdue · {st.session_state.staged_count} staged safely</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="metric-card">'
+        f'<div class="metric-label">Staged Pipeline</div>'
+        f'<div class="metric-val">{pending_count} Pending Review</div>'
+        f'<div class="metric-sub">0 overdue · {st.session_state.staged_count} staged safely</div>'
+        f'</div>',
+        unsafe_allow_html=True
+    )
 
 st.write("")
 
@@ -760,14 +780,15 @@ with c_right:
 # 7. Collapsible Transcript Stream Drawer
 # -----------------------------------------------------------------------------
 with st.expander("🎙️ Bee Ambient Transcript Stream (Click to inspect recorded turns)", expanded=False):
-    st.markdown(f"""
-    <div style="background: {tokens['DRAWER_BG']}; border: 1px solid {tokens['BORDER_COL']}; border-radius: 8px; padding: 14px 18px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: {tokens['TEXT_BODY']}; line-height: 1.6;">
-        <div>[09:41:04] Device: Bee Pendant 0x91B2 · Diarization Engine Active · Audio Stream 16kHz</div>
-        <div>[09:41:12] Speaker 1 (Me): "Hey Alex, thanks for the sync. I'll send you the revised pitch deck by 5 PM tomorrow with the updated architecture diagram."</div>
-        <div>[09:41:20] Speaker 2 (Alex): "Sounds great. Make sure to review the Q3 analytics report before Wednesday noon so we're aligned for the client sync."</div>
-        <div>[09:41:28] Speaker 1 (Me): "Will do, let's also block 30 minutes on Thursday morning for a dry run."</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f'<div style="background: {tokens["DRAWER_BG"]}; border: 1px solid {tokens["BORDER_COL"]}; border-radius: 8px; padding: 14px 18px; font-family: \'JetBrains Mono\', monospace; font-size: 12.5px; color: {tokens["TEXT_BODY"]}; line-height: 1.6;">'
+        '<div>[09:41:04] Device: Bee Pendant 0x91B2 · Diarization Engine Active · Audio Stream 16kHz</div>'
+        '<div>[09:41:12] Speaker 1 (Me): "Hey Alex, thanks for the sync. I\'ll send you the revised pitch deck by 5 PM tomorrow with the updated architecture diagram."</div>'
+        '<div>[09:41:20] Speaker 2 (Alex): "Sounds great. Make sure to review the Q3 analytics report before Wednesday noon so we\'re aligned for the client sync."</div>'
+        '<div>[09:41:28] Speaker 1 (Me): "Will do, let\'s also block 30 minutes on Thursday morning for a dry run."</div>'
+        '</div>',
+        unsafe_allow_html=True
+    )
 
 st.markdown(f"<h2 style='font-size: 18px; font-weight: 600; color: {tokens['TEXT_PRIMARY']}; margin: 24px 0 16px 0;'>Commitments Pending Review</h2>", unsafe_allow_html=True)
 
@@ -777,47 +798,36 @@ st.markdown(f"<h2 style='font-size: 18px; font-weight: 600; color: {tokens['TEXT
 selected_idx = st.session_state.get("selected_idx", 0)
 
 # Inject active card highlight border and subtle shadow for the selected card
-st.markdown(f"""
-<style>
-div.st-key-commitment_card_{selected_idx} div[data-testid="stVerticalBlockBorderWrapper"],
-div.st-key-commitment_card_{selected_idx} {{
-    border: 2px solid #2563EB !important;
-    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.14) !important;
-}}
-</style>
-""", unsafe_allow_html=True)
+st.markdown(
+    f'<style>'
+    f'div.st-key-commitment_card_{selected_idx} div[data-testid="stVerticalBlockBorderWrapper"], '
+    f'div.st-key-commitment_card_{selected_idx} {{'
+    f' border: 2px solid #2563EB !important;'
+    f' box-shadow: 0 4px 16px rgba(37, 99, 235, 0.14) !important;'
+    f'}}'
+    f'</style>',
+    unsafe_allow_html=True
+)
 
 router = ActionRouter()
 
 for idx, p in enumerate(st.session_state.promises):
     is_me = p["direction"] == "MADE_BY_ME"
-    badge_class = "badge-primary" if is_me else "badge-secondary"
     badge_label = "📤 Promise Made by Me" if is_me else "📥 Commitment to Me"
-    status_class = "badge-status-staged" if p["staged"] else "badge-status"
-    status_label = "✅ STAGED SAFELY" if p["staged"] else "Pending Review"
+    status_label = "✅ Staged Safely" if p["staged"] else "Pending Review"
     is_selected = (idx == selected_idx)
     
     with st.container(key=f"commitment_card_{idx}", border=True):
-        # Header row inside card
-        st.markdown(f"""
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span class="{badge_class}">{badge_label}</span>
-                <span class="{status_class}">{status_label}</span>
-                {'<span style="font-size: 11px; background: rgba(37, 99, 235, 0.12); color: #2563EB; padding: 2px 8px; border-radius: 9999px; font-weight: 600; border: 1px solid rgba(37, 99, 235, 0.3);">Active Focus</span>' if is_selected else ''}
-            </div>
-            <div style="font-size: 13px; font-weight: 500; color: {tokens['TEXT_SECONDARY']};">
-                ⏱️ Due: <strong style="color: {tokens['TEXT_PRIMARY']};">{p['verbal_deadline']}</strong>
-            </div>
-        </div>
-        <div style="font-size: 17px; font-weight: 600; color: {tokens['TEXT_PRIMARY']}; margin: 0 0 6px 0;">{p['task_title']}</div>
-        <div style="font-size: 14px; color: {tokens['TEXT_BODY']}; margin-bottom: 12px; line-height: 1.45;">{p['summary']}</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 12.5px; color: {tokens['TEXT_SECONDARY']}; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace;">
-            <span>Counterparty: <strong style="color: {tokens['TEXT_PRIMARY']};">{p['counterparty_name']}</strong></span>
-            <span>Email: <code style="color: {tokens['LINK_COLOR']};">{p['counterparty_email']}</code></span>
-            <span>ISO: <code style="color: {tokens['TEXT_SECONDARY']};">{p['iso_deadline']}</code></span>
-        </div>
-        """, unsafe_allow_html=True)
+        c_chip, c_due = st.columns([3, 1], vertical_alignment="center")
+        with c_chip:
+            focus_tag = " · `Active Focus`" if is_selected else ""
+            st.markdown(f"**{badge_label}** · `{status_label}`{focus_tag}")
+        with c_due:
+            st.caption(f"⏱️ Due: **{p['verbal_deadline']}**")
+        
+        st.markdown(f"### {p['task_title']}")
+        st.write(p['summary'])
+        st.caption(f"👤 Counterparty: **{p['counterparty_name']}** | ✉️ `{p['counterparty_email']}` | ISO: `{p['iso_deadline']}`")
         
         # 3 Clean Native Tabs with full legible labels
         tab_todo, tab_email, tab_cal = st.tabs(["📝 Todoist Task", "✉️ Gmail Draft", "📅 Calendar Block"])
@@ -872,9 +882,4 @@ for idx, p in enumerate(st.session_state.promises):
                     st.rerun()
                 
         if p["staged"]:
-            st.markdown(f"""
-            <div style="margin-top: 14px; padding: 10px 14px; background: {tokens['BADGE_STAGED_BG']}; border: 1px solid {tokens['BADGE_STAGED_BORDER']}; border-radius: 8px; font-size: 13px; color: {tokens['BADGE_STAGED_TEXT']};">
-                ✓ <b>Staged safely:</b> Created Gmail draft (never auto-sent), added Todoist task, and blocked tentative calendar time.
-                <a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" style="margin-left: 8px; color: {tokens['LINK_COLOR']}; text-decoration: none; font-weight: 600;">View Draft in Gmail ↗</a>
-            </div>
-            """, unsafe_allow_html=True)
+            st.success("✓ **Staged safely:** Created Gmail draft (never auto-sent), added Todoist task, and blocked tentative calendar time. [View Draft in Gmail ↗](https://mail.google.com/mail/u/0/#drafts)")
