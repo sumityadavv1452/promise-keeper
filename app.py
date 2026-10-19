@@ -7,7 +7,6 @@ Matches the official aesthetic of https://antigravity.google/
 from __future__ import annotations
 import os
 import sys
-import time
 from datetime import datetime, timezone
 
 # Ensure project root is in sys.path
@@ -64,10 +63,11 @@ html, body, [class*="css"] {
     padding-right: 32px;
 }
 
-/* 3. Sidebar: Clean Slate Styling */
+/* 3. Sidebar: Clean Slate High-Contrast Styling */
 section[data-testid="stSidebar"] {
     background-color: #FFFFFF !important;
     border-right: 1px solid #E6EAF0 !important;
+    color: #212226 !important;
 }
 
 section[data-testid="stSidebar"] h1,
@@ -79,6 +79,12 @@ section[data-testid="stSidebar"] h3 {
     text-transform: uppercase !important;
     letter-spacing: 0.05em !important;
     margin-bottom: 10px !important;
+}
+
+section[data-testid="stSidebar"] span,
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] label {
+    color: #212226 !important;
 }
 
 /* 4. Top Navigation Bar (Floating & Hairline) */
@@ -114,7 +120,7 @@ section[data-testid="stSidebar"] h3 {
 
 .ag-chip-quiet {
     background-color: #F1F4F9;
-    color: #5F6368;
+    color: #3C4043;
     padding: 3px 10px;
     border-radius: 9999px;
     font-size: 12px;
@@ -134,7 +140,7 @@ section[data-testid="stSidebar"] h3 {
     gap: 6px;
     background-color: #F8F9FC;
     border: 1px solid #E6EAF0;
-    color: #3C4043;
+    color: #212226;
     padding: 4px 12px;
     border-radius: 9999px;
     font-size: 12.5px;
@@ -188,7 +194,7 @@ section[data-testid="stSidebar"] h3 {
 
 .ag-metric-sub {
     font-size: 12px;
-    color: #80868B;
+    color: #5F6368;
 }
 
 /* 6. Ink Pill Buttons & Secondary Hairline Buttons */
@@ -229,20 +235,17 @@ button[kind="secondary"]:hover {
     color: #121317 !important;
 }
 
-/* 7. Clean Commitment Panel Cards */
-.ag-commitment-card {
-    background-color: #FFFFFF;
-    border: 1px solid #E6EAF0;
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 20px;
+/* 7. Streamlit Bordered Container as Clean Card */
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E6EAF0 !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    margin-bottom: 20px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
 }
 
-.ag-commitment-card.is-staged {
-    border-color: #CEEAD6;
-    background-color: #FAFDFB;
-}
-
+/* Direction and Status Chips */
 .ag-direction-chip-by {
     background-color: #E8F0FE;
     color: #1967D2;
@@ -264,15 +267,15 @@ button[kind="secondary"]:hover {
 .ag-status-chip-staged {
     background-color: #E6F4EA;
     color: #137333;
-    padding: 3px 10px;
+    padding: 4px 12px;
     border-radius: 9999px;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 600;
 }
 
 .ag-status-chip-pending {
     background-color: #F1F3F4;
-    color: #5F6368;
+    color: #3C4043;
     padding: 3px 10px;
     border-radius: 9999px;
     font-size: 12px;
@@ -283,22 +286,23 @@ button[kind="secondary"]:hover {
     font-size: 16px;
     font-weight: 600;
     color: #121317;
-    margin-top: 8px;
+    margin-top: 10px;
     margin-bottom: 6px;
     letter-spacing: -0.01em;
 }
 
 .ag-card-summary {
     font-size: 14px;
-    color: #3C4043;
+    color: #212226;
     line-height: 1.5;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .ag-card-meta {
     font-size: 12.5px;
     color: #5F6368;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 16px;
     margin-bottom: 16px;
@@ -320,11 +324,11 @@ input[type="text"]:focus, textarea:focus {
 
 /* 9. Minimal Antigravity Tabs */
 div[data-testid="stTabs"] button[role="tab"] {
-    color: #5F6368 !important;
-    font-size: 13px !important;
+    color: #3C4043 !important;
+    font-size: 13.5px !important;
     font-weight: 500 !important;
     border-bottom: 2px solid transparent !important;
-    padding-bottom: 8px !important;
+    padding: 8px 16px !important;
     letter-spacing: -0.01em !important;
 }
 
@@ -342,11 +346,11 @@ div[data-testid="stTabs"] button[aria-selected="true"] {
     padding: 16px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 12.5px;
-    color: #3C4043;
+    color: #212226;
     line-height: 1.6;
 }
 
-/* 11. Minimal External Link Button */
+/* 11. Minimal External Link Pill Button */
 .ag-link-pill {
     display: inline-flex;
     align-items: center;
@@ -357,7 +361,7 @@ div[data-testid="stTabs"] button[aria-selected="true"] {
     text-decoration: none;
     font-size: 12.5px;
     font-weight: 500;
-    padding: 6px 12px;
+    padding: 6px 14px;
     border-radius: 9999px;
     transition: border-color 0.15s ease, background-color 0.15s ease;
 }
@@ -452,27 +456,27 @@ if "staged_history" not in st.session_state:
     st.session_state.staged_history = []
 
 
-# Sidebar: Antigravity Minimal System & Destinations Panel
+# Sidebar: Antigravity High-Contrast System & Destinations Panel
 with st.sidebar:
     st.markdown("### Runtime Daemon")
     st.markdown(
         """
-        <div style="background:#FFFFFF; border:1px solid #E6EAF0; border-radius:10px; padding:14px; margin-bottom:18px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;">
-                <span style="color:#5F6368;">Daemon Status</span>
-                <span style="color:#188038; font-weight:600;"><span class="ag-live-dot"></span> Active</span>
+        <div style="background:#F8F9FC; border:1px solid #E6EAF0; border-radius:10px; padding:16px; margin-bottom:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="color:#212226; font-weight:500; font-size:13px;">Daemon Status</span>
+                <span style="color:#137333; font-weight:600; font-size:13px; display:inline-flex; align-items:center; gap:6px;"><span class="ag-live-dot"></span> Active</span>
             </div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;">
-                <span style="color:#5F6368;">Daemon Port</span>
-                <span style="font-family:'JetBrains Mono'; font-weight:500;">4242</span>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="color:#212226; font-weight:500; font-size:13px;">Daemon Port</span>
+                <span style="color:#212226; font-family:'JetBrains Mono', monospace; font-weight:600; font-size:13px;">4242</span>
             </div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;">
-                <span style="color:#5F6368;">Hardware Node</span>
-                <span style="font-family:'JetBrains Mono'; font-weight:500;">Pendant 0x91B2</span>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="color:#212226; font-weight:500; font-size:13px;">Hardware Node</span>
+                <span style="color:#212226; font-family:'JetBrains Mono', monospace; font-weight:600; font-size:13px;">Pendant 0x91B2</span>
             </div>
-            <div style="display:flex; justify-content:space-between; font-size:13px;">
-                <span style="color:#5F6368;">Battery Level</span>
-                <span style="font-weight:600; color:#121317;">92%</span>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="color:#212226; font-weight:500; font-size:13px;">Battery Level</span>
+                <span style="color:#212226; font-weight:600; font-size:13px;">92%</span>
             </div>
         </div>
         """,
@@ -516,11 +520,11 @@ with st.sidebar:
     summary = default_telemetry_recorder.get_summary()
     st.markdown(
         f"""
-        <div style="font-size:13px; color:#5F6368; line-height:1.8;">
-            <div>Invocations: <strong style="color:#121317;">{summary['total_calls']}</strong></div>
-            <div>Avg Latency: <strong style="color:#121317;">{summary['avg_latency_ms']} ms</strong></div>
-            <div>Tokens Consumed: <strong style="color:#121317;">{summary['total_tokens']:,}</strong></div>
-            <div>Cumulative Cost: <strong style="color:#121317;">${summary['total_cost_usd']:.6f}</strong></div>
+        <div style="font-size:13px; color:#3C4043; line-height:1.9;">
+            <div>Invocations: <strong style="color:#121317; font-weight:600;">{summary['total_calls']}</strong></div>
+            <div>Avg Latency: <strong style="color:#121317; font-weight:600;">{summary['avg_latency_ms']} ms</strong></div>
+            <div>Tokens Consumed: <strong style="color:#121317; font-weight:600;">{summary['total_tokens']:,}</strong></div>
+            <div>Cumulative Cost: <strong style="color:#121317; font-weight:600;">${summary['total_cost_usd']:.6f}</strong></div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -652,29 +656,14 @@ with st.expander("Bee Wearable Ambient Transcript Stream (Latest Turns)", expand
 st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
 
 
-# 5. Commitment Cards (Antigravity Clean Panel Style)
+# 5. Commitment Cards (Clean Panel Style with Native Tabs & Direct Controls)
 st.markdown("<div style='font-size:15px; font-weight:600; color:#121317; margin-bottom:16px;'>Commitments Pending Review</div>", unsafe_allow_html=True)
 
 if not st.session_state.promises:
     st.info("No commitments in queue. Click '🎙️ Sync from Bee' to ingest turns from the wearable daemon.")
 else:
-    # Direction Filter (Clean Slate)
-    filter_choice = st.radio(
-        "Filter Direction",
-        ["All Commitments", "📤 Made By Me", "📥 Commitment to Me"],
-        horizontal=True,
-        label_visibility="collapsed",
-    )
-
-    filtered = st.session_state.promises
-    if filter_choice == "📤 Made By Me":
-        filtered = [p for p in filtered if p.direction == "MADE_BY_ME"]
-    elif filter_choice == "📥 Commitment to Me":
-        filtered = [p for p in filtered if p.direction == "MADE_TO_ME"]
-
-    for idx, promise in enumerate(filtered):
+    for idx, promise in enumerate(st.session_state.promises):
         is_staged = promise.status == "STAGED"
-        card_class = "ag-commitment-card is-staged" if is_staged else "ag-commitment-card"
 
         if promise.direction == "MADE_BY_ME":
             dir_badge = '<span class="ag-direction-chip-by">📤 Promise Made by Me</span>'
@@ -687,34 +676,33 @@ else:
             else '<span class="ag-status-chip-pending">Pending Review</span>'
         )
 
-        with st.container():
-            # Card Outer Container
+        # Render complete commitment card inside native Streamlit bordered container
+        with st.container(border=True):
+            # Card Header
             st.markdown(
                 f"""
-                <div class="{card_class}">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            {dir_badge}
-                            {status_badge}
-                        </div>
-                        <div style="font-size:12.5px; color:#5F6368; font-weight:500;">
-                            ⏱️ Due: <strong style="color:#121317;">{promise.verbal_deadline}</strong>
-                        </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        {dir_badge}
+                        {status_badge}
                     </div>
-                    <div class="ag-card-title">{promise.task_title}</div>
-                    <div class="ag-card-summary">{promise.summary}</div>
-                    <div class="ag-card-meta">
-                        <span>Counterparty: <strong style="color:#121317;">{promise.counterparty_name}</strong></span>
-                        <span>Recipient: <code>{promise.counterparty_email}</code></span>
-                        <span>ISO Deadline: <code>{promise.inferred_iso_deadline}</code></span>
+                    <div style="font-size:13px; color:#5F6368; font-weight:500;">
+                        ⏱️ Due: <strong style="color:#121317;">{promise.verbal_deadline}</strong>
                     </div>
+                </div>
+                <div class="ag-card-title">{promise.task_title}</div>
+                <div class="ag-card-summary">{promise.summary}</div>
+                <div class="ag-card-meta">
+                    <span>Counterparty: <strong style="color:#121317;">{promise.counterparty_name}</strong></span>
+                    <span>Email: <code>{promise.counterparty_email}</code></span>
+                    <span>ISO Deadline: <code>{promise.inferred_iso_deadline}</code></span>
                 </div>
                 """,
                 unsafe_allow_html=True,
             )
 
-            # 3 Clean Inner Tabs (Todoist Task, Gmail Draft, Calendar Block)
-            tab_task, tab_email, tab_cal = st.tabs(["Todoist Task", "Gmail Draft", "Calendar Tentative Block"])
+            # 3 Clean Native Tabs inside the card (Todoist Task, Gmail Draft, Calendar Block)
+            tab_task, tab_email, tab_cal = st.tabs(["📝 Todoist Task", "✉️ Gmail Draft", "📅 Calendar Block"])
 
             with tab_task:
                 c_t1, c_t2 = st.columns([3, 1])
@@ -755,7 +743,7 @@ else:
                     promise.email_draft.subject = new_subj
 
                 new_body = st.text_area(
-                    "Draft Body (Draft Only: Safe isolation)",
+                    "Generated Gmail Draft (Subject & Body Preview)",
                     value=promise.email_draft.body,
                     rows=3,
                     key=f"body_{promise.id}_{idx}",
@@ -767,7 +755,7 @@ else:
                 c_c1, c_c2 = st.columns([2, 1])
                 with c_c1:
                     new_event = st.text_input(
-                        "Calendar Event Summary",
+                        "Calendar Event Title",
                         value=promise.calendar_event.title,
                         key=f"cal_t_{promise.id}_{idx}",
                         disabled=is_staged,
@@ -775,7 +763,7 @@ else:
                     promise.calendar_event.title = new_event
                 with c_c2:
                     new_dur = st.number_input(
-                        "Duration (minutes)",
+                        "Suggested Duration (minutes)",
                         value=promise.calendar_event.duration_minutes,
                         step=15,
                         key=f"cal_d_{promise.id}_{idx}",
@@ -785,12 +773,14 @@ else:
 
                 st.caption(f"Tentative start: `{promise.calendar_event.start_iso}` (Non-destructive focus block)")
 
-            # Action Buttons per Card
-            b_col1, b_col2, b_col3 = st.columns([1.6, 1.0, 3.4])
+            st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
 
-            with b_col1:
+            # Individual Card Actions & Approval Controls
+            act_col1, act_col2 = st.columns([2.0, 3.0])
+
+            with act_col1:
                 if not is_staged:
-                    if st.button("Approve & Stage Action", key=f"btn_stage_{promise.id}_{idx}", type="primary"):
+                    if st.button("✅ Approve & Stage Action", key=f"btn_stage_{promise.id}_{idx}", type="primary"):
                         router = st.session_state.action_router
                         router.stage_todoist(promise.task_title, due_date=promise.verbal_deadline, priority=prio)
                         router.stage_calendar_event(
@@ -810,31 +800,27 @@ else:
                 else:
                     st.markdown(
                         """
-                        <div style="padding-top:6px;">
-                            <span class="ag-status-chip-staged">✓ STAGED SAFELY</span>
+                        <div style="padding-top:4px;">
+                            <span class="ag-status-chip-staged">✓ Staged</span>
                         </div>
                         """,
                         unsafe_allow_html=True,
                     )
 
-            with b_col2:
-                if not is_staged:
+            with act_col2:
+                if is_staged:
+                    st.markdown(
+                        """
+                        <div style="display:flex; align-items:center; gap:8px; padding-top:4px;">
+                            <a class="ag-link-pill" href="https://mail.google.com/mail/u/0/#drafts" target="_blank">✉️ Open in Gmail Drafts ↗</a>
+                            <a class="ag-link-pill" href="https://calendar.google.com" target="_blank">📅 View Calendar ↗</a>
+                            <a class="ag-link-pill" href="https://app.todoist.com/app/today" target="_blank">📝 View Todoist ↗</a>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+                else:
                     if st.button("Dismiss", key=f"btn_dismiss_{promise.id}_{idx}", type="secondary"):
                         st.session_state.promises = [p for p in st.session_state.promises if p.id != promise.id]
                         st.toast("Dismissed commitment", icon="🗑️")
                         st.rerun()
-
-            with b_col3:
-                if is_staged:
-                    st.markdown(
-                        """
-                        <div style="font-size:13px; color:#188038; padding-top:6px;">
-                            Staged in: <a class="ag-link-pill" href="https://mail.google.com/mail/u/0/#drafts" target="_blank">Gmail Drafts ↗</a>
-                            <a class="ag-link-pill" href="https://calendar.google.com" target="_blank">Google Calendar ↗</a>
-                            <a class="ag-link-pill" href="https://app.todoist.com/app/today" target="_blank">Todoist ↗</a>
-                        </div>
-                        """,
-                        unsafe_allow_html=True,
-                    )
-
-            st.markdown("<hr style='border:none; border-top:1px solid #E6EAF0; margin:24px 0;'>", unsafe_allow_html=True)
