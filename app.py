@@ -101,21 +101,24 @@ section[data-testid="stSidebar"] label {
 
 .ag-nav-left {
     display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.ag-brand-symbol {
-    font-size: 16px;
-    color: #121317;
-    font-weight: 700;
+    flex-direction: column;
+    gap: 3px;
 }
 
 .ag-brand-title {
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 650;
     color: #121317;
     letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.ag-brand-tagline {
+    font-size: 13.5px;
+    font-weight: 450;
+    color: #5F6368;
+    letter-spacing: -0.01em;
+    margin: 0;
 }
 
 .ag-chip-quiet {
@@ -551,9 +554,11 @@ st.markdown(
     """
     <div class="ag-nav-bar">
         <div class="ag-nav-left">
-            <span class="ag-brand-symbol">✦</span>
-            <span class="ag-brand-title">Promise Keeper</span>
-            <span class="ag-chip-quiet">Bee v1.4.2 · Bedrock Nova Pro</span>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span class="ag-brand-title">✦ Promise Keeper</span>
+                <span class="ag-chip-quiet">Bee v1.4.2 · Bedrock Nova Pro</span>
+            </div>
+            <div class="ag-brand-tagline">“You said it. We’ll remember it.”</div>
         </div>
         <div class="ag-nav-right">
             <span class="ag-daemon-pill"><span class="ag-live-dot"></span> Bee Daemon Active (Port 4242)</span>
@@ -760,7 +765,7 @@ else:
                 new_body = st.text_area(
                     "Email Body",
                     value=promise.email_draft.body,
-                    height=140,
+                    height=130,
                     key=f"email_body_{promise.id}_{idx}",
                     disabled=is_staged,
                 )
