@@ -7,39 +7,169 @@ from src.action_router import ActionRouter
 from src.telemetry import TelemetryRecorder
 
 # -----------------------------------------------------------------------------
-# 1. Page Configuration & Unified Dark Engineering Canvas
+# 1. Page Configuration & Theme Initialization
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="Promise Keeper — Wearable AI Commitment Engine",
+    page_title="Promise Keeper — Wearable AI Engine",
     page_icon="✦",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom Unified Dark CSS (Linear / Vercel / Antigravity Dark Aesthetics)
-st.markdown("""
+if "theme" not in st.session_state:
+    st.session_state.theme = "Dark"
+
+# -----------------------------------------------------------------------------
+# 2. Sidebar (Theme Toggle, Runtime Health & Destinations)
+# -----------------------------------------------------------------------------
+with st.sidebar:
+    st.markdown("### Appearance")
+    theme_choice = st.radio(
+        "Theme Mode",
+        ["🌙 Dark", "☀️ Light"],
+        index=0 if st.session_state.theme == "Dark" else 1,
+        horizontal=True,
+        label_visibility="collapsed",
+        key="theme_mode_selector"
+    )
+    current_theme = "Dark" if "Dark" in theme_choice else "Light"
+    st.session_state.theme = current_theme
+
+    st.markdown("### Runtime Daemon")
+    st.markdown("""
+    <div class="sidebar-section">
+        <div class="sidebar-row"><span>Daemon Status</span><span class="sidebar-val" style="color: #3FB950;">● Active</span></div>
+        <div class="sidebar-row"><span>Daemon Port</span><span class="sidebar-val">4242</span></div>
+        <div class="sidebar-row"><span>Hardware Node</span><span class="sidebar-val">Pendant 0x91B2</span></div>
+        <div class="sidebar-row"><span>Battery Level</span><span class="sidebar-val">92%</span></div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("### Bedrock Inference Model")
+    model_choice = st.selectbox(
+        "Model Selection",
+        ["amazon.nova-pro-v1:0", "anthropic.claude-3-5-sonnet-20241022-v2:0"],
+        index=0,
+        label_visibility="collapsed"
+    )
+    
+    st.markdown("### Staging Destinations")
+    st.markdown("""
+    <div class="sidebar-section">
+        <p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" class="sidebar-link">✉️ Open Gmail Drafts ↗</a></p>
+        <p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://calendar.google.com/" target="_blank" class="sidebar-link">📅 Open Google Calendar ↗</a></p>
+        <p style="margin: 0; font-size: 13px;"><a href="https://app.todoist.com/" target="_blank" class="sidebar-link">📝 Open Todoist App ↗</a></p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("### Telemetry Session")
+    latency_display = st.session_state.get("latency_ms", 284)
+    tokens_display = st.session_state.get("tokens_used", 1140)
+    st.markdown(f"""
+    <div class="sidebar-telemetry">
+        <div>Converse API Latency: <strong>{latency_display} ms</strong></div>
+        <div>Tokens Consumed: <strong>{tokens_display:,}</strong></div>
+        <div>Estimated Cost: <strong>$0.0009 USD</strong></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# -----------------------------------------------------------------------------
+# 3. Dynamic Theme Tokens & Antigravity CSS Injection
+# -----------------------------------------------------------------------------
+if current_theme == "Dark":
+    tokens = {
+        "BG_CANVAS": "#0D1117",
+        "BG_CARD": "#161B22",
+        "BG_INPUT": "#0D1117",
+        "BG_SURFACE": "#21262D",
+        "BORDER_COL": "#30363D",
+        "TEXT_PRIMARY": "#F0F6FC",
+        "TEXT_SECONDARY": "#8B949E",
+        "TEXT_BODY": "#C9D1D9",
+        "SIDEBAR_BG": "#0D1117",
+        "BADGE_BY_BG": "rgba(31, 111, 235, 0.15)",
+        "BADGE_BY_BORDER": "rgba(56, 139, 253, 0.4)",
+        "BADGE_BY_TEXT": "#58A6FF",
+        "BADGE_TO_BG": "rgba(210, 153, 34, 0.15)",
+        "BADGE_TO_BORDER": "rgba(210, 153, 34, 0.4)",
+        "BADGE_TO_TEXT": "#D29922",
+        "BADGE_STAGED_BG": "rgba(35, 134, 54, 0.2)",
+        "BADGE_STAGED_BORDER": "#238636",
+        "BADGE_STAGED_TEXT": "#3FB950",
+        "BTN_PRIMARY_BG": "#238636",
+        "BTN_PRIMARY_HOVER": "#2EA043",
+        "BTN_PRIMARY_TEXT": "#FFFFFF",
+        "BTN_SEC_BG": "#21262D",
+        "BTN_SEC_HOVER": "#30363D",
+        "BTN_SEC_BORDER": "#30363D",
+        "BTN_SEC_TEXT": "#C9D1D9",
+        "DRAWER_BG": "#090D13",
+        "LINK_COLOR": "#58A6FF",
+    }
+else:
+    tokens = {
+        "BG_CANVAS": "#F8F9FC",
+        "BG_CARD": "#FFFFFF",
+        "BG_INPUT": "#FFFFFF",
+        "BG_SURFACE": "#F1F4F9",
+        "BORDER_COL": "#E6EAF0",
+        "TEXT_PRIMARY": "#121317",
+        "TEXT_SECONDARY": "#5F6368",
+        "TEXT_BODY": "#3C4043",
+        "SIDEBAR_BG": "#FFFFFF",
+        "BADGE_BY_BG": "#E8F0FE",
+        "BADGE_BY_BORDER": "#D2E3FC",
+        "BADGE_BY_TEXT": "#1967D2",
+        "BADGE_TO_BG": "#FEF7E0",
+        "BADGE_TO_BORDER": "#FEEFC3",
+        "BADGE_TO_TEXT": "#B06000",
+        "BADGE_STAGED_BG": "#E6F4EA",
+        "BADGE_STAGED_BORDER": "#CEEAD6",
+        "BADGE_STAGED_TEXT": "#137333",
+        "BTN_PRIMARY_BG": "#121317",
+        "BTN_PRIMARY_HOVER": "#2F3034",
+        "BTN_PRIMARY_TEXT": "#FFFFFF",
+        "BTN_SEC_BG": "#FFFFFF",
+        "BTN_SEC_HOVER": "#F8F9FC",
+        "BTN_SEC_BORDER": "#E6EAF0",
+        "BTN_SEC_TEXT": "#121317",
+        "DRAWER_BG": "#F8F9FC",
+        "LINK_COLOR": "#1A73E8",
+    }
+
+CSS_TEMPLATE = """
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;650&family=JetBrains+Mono:wght@400;500;600&display=swap');
     
-    /* Base Reset */
+    /* Global Canvas */
     html, body, [class*="css"] {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        color: #F0F6FC !important;
-        background-color: #0D1117 !important;
+        color: __TEXT_PRIMARY__ !important;
+        background-color: __BG_CANVAS__ !important;
     }
     
     .stApp {
-        background-color: #0D1117 !important;
-        color: #F0F6FC !important;
+        background-color: __BG_CANVAS__ !important;
+        color: __TEXT_PRIMARY__ !important;
     }
-    
-    /* Hide generic Streamlit UI chrome */
-    header, #MainMenu, footer { visibility: hidden !important; }
+
+    /* Keep Sidebar Toggle Button Visible while Hiding Chrome */
+    #MainMenu, footer { visibility: hidden !important; }
     div[data-testid="stDecoration"] { display: none !important; }
-    div[data-testid="stToolbar"] { display: none !important; }
     div[data-testid="stStatusWidget"] { display: none !important; }
     .stDeployButton { display: none !important; }
-    .block-container { padding-top: 1.5rem; padding-bottom: 3rem; max-width: 1200px; }
+    header[data-testid="stHeader"] {
+        background-color: transparent !important;
+    }
+    header[data-testid="stHeader"] button {
+        color: __TEXT_PRIMARY__ !important;
+    }
+    
+    .block-container {
+        padding-top: 1.5rem;
+        padding-bottom: 3rem;
+        max-width: 1200px;
+    }
     
     /* Top Hero Header */
     .hero-container {
@@ -47,17 +177,17 @@ st.markdown("""
         align-items: center;
         justify-content: space-between;
         padding: 20px 24px;
-        background: #161B22;
-        border: 1px solid #30363D;
+        background: __BG_CARD__;
+        border: 1px solid __BORDER_COL__;
         border-radius: 16px;
         margin-bottom: 24px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     }
     .brand-title {
         font-size: 20px;
         font-weight: 650;
         letter-spacing: -0.02em;
-        color: #F0F6FC;
+        color: __TEXT_PRIMARY__;
         margin: 0;
         line-height: 1.2;
     }
@@ -65,16 +195,16 @@ st.markdown("""
         font-family: 'JetBrains Mono', monospace;
         font-size: 11px;
         font-weight: 500;
-        background: #21262D;
-        border: 1px solid #30363D;
-        color: #8B949E;
+        background: __BG_SURFACE__;
+        border: 1px solid __BORDER_COL__;
+        color: __TEXT_SECONDARY__;
         padding: 3px 8px;
         border-radius: 9999px;
     }
     .brand-tagline {
-        font-size: 14px;
+        font-size: 13.5px;
         font-weight: 450;
-        color: #8B949E;
+        color: __TEXT_SECONDARY__;
         margin: 4px 0 0 0;
         letter-spacing: -0.01em;
     }
@@ -83,12 +213,12 @@ st.markdown("""
         align-items: center;
         gap: 6px;
         padding: 6px 14px;
-        background: #21262D;
-        border: 1px solid #30363D;
+        background: __BG_SURFACE__;
+        border: 1px solid __BORDER_COL__;
         border-radius: 9999px;
         font-size: 12px;
         font-weight: 500;
-        color: #C9D1D9;
+        color: __TEXT_BODY__;
     }
     .green-dot {
         width: 7px;
@@ -100,16 +230,16 @@ st.markdown("""
     
     /* High-Density Metric Strip Cards */
     .metric-card {
-        background: #161B22;
-        border: 1px solid #30363D;
+        background: __BG_CARD__;
+        border: 1px solid __BORDER_COL__;
         border-radius: 14px;
         padding: 16px 20px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
     .metric-label {
         font-size: 11px;
         font-weight: 600;
-        color: #8B949E;
+        color: __TEXT_SECONDARY__;
         margin-bottom: 6px;
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -118,72 +248,72 @@ st.markdown("""
         font-family: 'JetBrains Mono', monospace;
         font-size: 22px;
         font-weight: 600;
-        color: #F0F6FC;
+        color: __TEXT_PRIMARY__;
         margin-bottom: 4px;
     }
     .metric-sub {
         font-size: 12px;
-        color: #8B949E;
+        color: __TEXT_SECONDARY__;
     }
     
     /* Native Bordered Container as Clean Dark Card */
     div[data-testid="stVerticalBlockBorderWrapper"] {
-        background-color: #161B22 !important;
-        border: 1px solid #30363D !important;
+        background-color: __BG_CARD__ !important;
+        border: 1px solid __BORDER_COL__ !important;
         border-radius: 16px !important;
         padding: 22px !important;
         margin-bottom: 20px !important;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.25) !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06) !important;
     }
     
     /* Direction and Status Chips */
     .badge-primary {
-        background: rgba(31, 111, 235, 0.15);
-        border: 1px solid rgba(56, 139, 253, 0.4);
-        color: #58A6FF;
+        background: __BADGE_BY_BG__;
+        border: 1px solid __BADGE_BY_BORDER__;
+        color: __BADGE_BY_TEXT__;
         font-size: 12px;
         font-weight: 500;
         padding: 3px 10px;
         border-radius: 9999px;
     }
     .badge-secondary {
-        background: rgba(210, 153, 34, 0.15);
-        border: 1px solid rgba(210, 153, 34, 0.4);
-        color: #D29922;
+        background: __BADGE_TO_BG__;
+        border: 1px solid __BADGE_TO_BORDER__;
+        color: __BADGE_TO_TEXT__;
         font-size: 12px;
         font-weight: 500;
         padding: 3px 10px;
         border-radius: 9999px;
     }
     .badge-status {
-        background: #21262D;
-        border: 1px solid #30363D;
-        color: #8B949E;
+        background: __BG_SURFACE__;
+        border: 1px solid __BORDER_COL__;
+        color: __TEXT_SECONDARY__;
         font-size: 12px;
         font-weight: 500;
         padding: 3px 10px;
         border-radius: 9999px;
     }
     .badge-status-staged {
-        background: rgba(35, 134, 54, 0.2);
-        border: 1px solid #238636;
-        color: #3FB950;
+        background: __BADGE_STAGED_BG__;
+        border: 1px solid __BADGE_STAGED_BORDER__;
+        color: __BADGE_STAGED_TEXT__;
         font-size: 12px;
         font-weight: 600;
         padding: 3px 10px;
         border-radius: 9999px;
     }
     
-    /* Sidebar Styles with High Contrast */
+    /* Sidebar Styles */
     section[data-testid="stSidebar"] {
-        background-color: #0D1117 !important;
-        border-right: 1px solid #30363D !important;
-        color: #C9D1D9 !important;
+        background-color: __SIDEBAR_BG__ !important;
+        border-right: 1px solid __BORDER_COL__ !important;
+        color: __TEXT_BODY__ !important;
     }
     section[data-testid="stSidebar"] h1,
     section[data-testid="stSidebar"] h2,
     section[data-testid="stSidebar"] h3 {
-        color: #F0F6FC !important;
+        color: __TEXT_PRIMARY__ !important;
         font-size: 13px !important;
         font-weight: 600 !important;
         text-transform: uppercase !important;
@@ -191,8 +321,8 @@ st.markdown("""
         margin-bottom: 10px !important;
     }
     .sidebar-section {
-        background: #161B22 !important;
-        border: 1px solid #30363D !important;
+        background: __BG_CARD__ !important;
+        border: 1px solid __BORDER_COL__ !important;
         border-radius: 12px !important;
         padding: 16px !important;
         margin-bottom: 16px !important;
@@ -201,20 +331,33 @@ st.markdown("""
         display: flex;
         justify-content: space-between;
         font-size: 13px;
-        color: #8B949E;
+        color: __TEXT_SECONDARY__;
         padding: 6px 0;
-        border-bottom: 1px solid #21262D;
+        border-bottom: 1px solid __BORDER_COL__;
     }
     .sidebar-row:last-child { border-bottom: none; }
     .sidebar-val {
         font-family: 'JetBrains Mono', monospace;
         font-weight: 500;
-        color: #F0F6FC;
+        color: __TEXT_PRIMARY__;
+    }
+    .sidebar-link {
+        text-decoration: none;
+        color: __LINK_COLOR__;
+        font-weight: 500;
+    }
+    .sidebar-telemetry {
+        font-size: 12.5px;
+        color: __TEXT_SECONDARY__;
+        line-height: 1.8;
+    }
+    .sidebar-telemetry strong {
+        color: __TEXT_PRIMARY__;
     }
 
-    /* Tabs: Dark High-Contrast Labels */
+    /* Tabs: Distinct Antigravity Labels */
     div[data-testid="stTabs"] button[role="tab"] {
-        color: #8B949E !important;
+        color: __TEXT_SECONDARY__ !important;
         font-size: 13.5px !important;
         font-weight: 500 !important;
         padding: 8px 16px !important;
@@ -223,37 +366,37 @@ st.markdown("""
     div[data-testid="stTabs"] button[role="tab"] p,
     div[data-testid="stTabs"] button[data-baseweb="tab"] p,
     div[data-testid="stTabs"] button span {
-        color: #8B949E !important;
+        color: __TEXT_SECONDARY__ !important;
         font-size: 13.5px !important;
         font-weight: 500 !important;
         margin: 0 !important;
     }
     div[data-testid="stTabs"] button[aria-selected="true"] {
-        border-bottom: 2px solid #58A6FF !important;
+        border-bottom: 2px solid __LINK_COLOR__ !important;
     }
     div[data-testid="stTabs"] button[aria-selected="true"] p,
     div[data-testid="stTabs"] button[aria-selected="true"] span {
-        color: #F0F6FC !important;
+        color: __TEXT_PRIMARY__ !important;
         font-weight: 600 !important;
     }
 
-    /* Dark Form Controls */
+    /* Form Controls */
     input[type="text"], input[type="number"], textarea, .stSelectbox div[data-baseweb="select"] {
-        background-color: #0D1117 !important;
-        border: 1px solid #30363D !important;
+        background-color: __BG_INPUT__ !important;
+        border: 1px solid __BORDER_COL__ !important;
         border-radius: 8px !important;
-        color: #F0F6FC !important;
+        color: __TEXT_PRIMARY__ !important;
         font-size: 13.5px !important;
     }
     input[type="text"]:focus, textarea:focus {
-        border-color: #58A6FF !important;
-        box-shadow: 0 0 0 1px #58A6FF !important;
+        border-color: __LINK_COLOR__ !important;
+        box-shadow: 0 0 0 1px __LINK_COLOR__ !important;
     }
     
     /* Buttons */
     button[kind="primary"], .stButton > button[kind="primary"] {
-        background-color: #238636 !important;
-        color: #FFFFFF !important;
+        background-color: __BTN_PRIMARY_BG__ !important;
+        color: __BTN_PRIMARY_TEXT__ !important;
         border: 1px solid rgba(240, 246, 252, 0.1) !important;
         border-radius: 9999px !important;
         font-weight: 600 !important;
@@ -262,13 +405,13 @@ st.markdown("""
         transition: all 0.15s ease !important;
     }
     button[kind="primary"]:hover {
-        background-color: #2EA043 !important;
+        background-color: __BTN_PRIMARY_HOVER__ !important;
     }
     
     button[kind="secondary"], .stButton > button[kind="secondary"], .stButton > button {
-        background-color: #21262D !important;
-        color: #C9D1D9 !important;
-        border: 1px solid #30363D !important;
+        background-color: __BTN_SEC_BG__ !important;
+        color: __BTN_SEC_TEXT__ !important;
+        border: 1px solid __BTN_SEC_BORDER__ !important;
         border-radius: 9999px !important;
         font-weight: 500 !important;
         font-size: 13.5px !important;
@@ -276,15 +419,21 @@ st.markdown("""
         transition: all 0.15s ease !important;
     }
     button[kind="secondary"]:hover, .stButton > button:hover {
-        background-color: #30363D !important;
-        border-color: #8B949E !important;
-        color: #F0F6FC !important;
+        background-color: __BTN_SEC_HOVER__ !important;
+        color: __TEXT_PRIMARY__ !important;
     }
 </style>
-""", unsafe_allow_html=True)
+"""
+
+# Inject dynamically customized CSS tokens
+rendered_css = CSS_TEMPLATE
+for token_key, token_val in tokens.items():
+    rendered_css = rendered_css.replace(f"__{token_key}__", token_val)
+
+st.markdown(rendered_css, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 2. State Initialization
+# 4. State Initialization
 # -----------------------------------------------------------------------------
 if "promises" not in st.session_state:
     st.session_state.promises = [
@@ -330,47 +479,7 @@ if "tokens_used" not in st.session_state:
     st.session_state.tokens_used = 1140
 
 # -----------------------------------------------------------------------------
-# 3. Sidebar (Toolchain Diagnostics & Live Direct Links)
-# -----------------------------------------------------------------------------
-with st.sidebar:
-    st.markdown("### Runtime Daemon")
-    st.markdown("""
-    <div class="sidebar-section">
-        <div class="sidebar-row"><span>Daemon Status</span><span class="sidebar-val" style="color: #3FB950;">● Active</span></div>
-        <div class="sidebar-row"><span>Daemon Port</span><span class="sidebar-val">4242</span></div>
-        <div class="sidebar-row"><span>Hardware Node</span><span class="sidebar-val">Pendant 0x91B2</span></div>
-        <div class="sidebar-row"><span>Battery Level</span><span class="sidebar-val">92%</span></div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("### Bedrock Inference Model")
-    model_choice = st.selectbox(
-        "Model Selection",
-        ["amazon.nova-pro-v1:0", "anthropic.claude-3-5-sonnet-20241022-v2:0"],
-        index=0,
-        label_visibility="collapsed"
-    )
-    
-    st.markdown("### Staging Destinations")
-    st.markdown("""
-    <div class="sidebar-section">
-        <p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" style="text-decoration: none; color: #58A6FF; font-weight: 500;">✉️ Open Gmail Drafts ↗</a></p>
-        <p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://calendar.google.com/" target="_blank" style="text-decoration: none; color: #58A6FF; font-weight: 500;">📅 Open Google Calendar ↗</a></p>
-        <p style="margin: 0; font-size: 13px;"><a href="https://app.todoist.com/" target="_blank" style="text-decoration: none; color: #58A6FF; font-weight: 500;">📝 Open Todoist App ↗</a></p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("### Telemetry Session")
-    st.markdown(f"""
-    <div style="font-size: 12.5px; color: #8B949E; line-height: 1.8;">
-        <div>Converse API Latency: <strong style="color: #F0F6FC;">{st.session_state.latency_ms} ms</strong></div>
-        <div>Tokens Consumed: <strong style="color: #F0F6FC;">{st.session_state.tokens_used:,}</strong></div>
-        <div>Estimated Cost: <strong style="color: #F0F6FC;">$0.0009 USD</strong></div>
-    </div>
-    """, unsafe_allow_html=True)
-
-# -----------------------------------------------------------------------------
-# 4. Top Hero Section with Tagline
+# 5. Top Hero Section with Realignment & Tagline
 # -----------------------------------------------------------------------------
 st.markdown("""
 <div class="hero-container">
@@ -389,7 +498,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 5. High-Density Metric Strip
+# 6. High-Density Metric Strip Cards
 # -----------------------------------------------------------------------------
 m1, m2, m3, m4 = st.columns(4)
 
@@ -433,7 +542,7 @@ with m4:
 st.write("")
 
 # -----------------------------------------------------------------------------
-# 6. Action Control Strip
+# 7. Action Control Strip
 # -----------------------------------------------------------------------------
 c_left, c_mid, c_right = st.columns([1.5, 1.5, 5])
 
@@ -473,11 +582,15 @@ with c_right:
         st.rerun()
 
 # -----------------------------------------------------------------------------
-# 7. Collapsible Transcript Stream Drawer
+# 8. Collapsible Transcript Stream Drawer
 # -----------------------------------------------------------------------------
+drawer_bg = tokens["DRAWER_BG"]
+border_col = tokens["BORDER_COL"]
+text_body = tokens["TEXT_BODY"]
+
 with st.expander("🎙️ Bee Ambient Transcript Stream (Click to inspect recorded turns)", expanded=False):
-    st.markdown("""
-    <div style="background: #090D13; border: 1px solid #30363D; border-radius: 8px; padding: 14px 18px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #C9D1D9; line-height: 1.6;">
+    st.markdown(f"""
+    <div style="background: {drawer_bg}; border: 1px solid {border_col}; border-radius: 8px; padding: 14px 18px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: {text_body}; line-height: 1.6;">
         <div>[09:41:04] Device: Bee Pendant 0x91B2 · Diarization Engine Active · Audio Stream 16kHz</div>
         <div>[09:41:12] Speaker 1 (Me): "Hey Alex, thanks for the sync. I'll send you the revised pitch deck by 5 PM tomorrow with the updated architecture diagram."</div>
         <div>[09:41:20] Speaker 2 (Alex): "Sounds great. Make sure to review the Q3 analytics report before Wednesday noon so we're aligned for the client sync."</div>
@@ -485,10 +598,10 @@ with st.expander("🎙️ Bee Ambient Transcript Stream (Click to inspect record
     </div>
     """, unsafe_allow_html=True)
 
-st.markdown("<h2 style='font-size: 18px; font-weight: 600; color: #F0F6FC; margin: 24px 0 16px 0;'>Commitments Pending Review</h2>", unsafe_allow_html=True)
+st.markdown(f"<h2 style='font-size: 18px; font-weight: 600; color: {tokens['TEXT_PRIMARY']}; margin: 24px 0 16px 0;'>Commitments Pending Review</h2>", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 8. Render Each Commitment inside a Solid Container Card (Zero empty white bars)
+# 9. Render Each Commitment inside Native Bordered Container
 # -----------------------------------------------------------------------------
 router = ActionRouter()
 
@@ -499,29 +612,28 @@ for idx, p in enumerate(st.session_state.promises):
     status_class = "badge-status-staged" if p["staged"] else "badge-status"
     status_label = "✅ STAGED SAFELY" if p["staged"] else "Pending Review"
     
-    # Use native Streamlit container with border for 100% clean dark styling
+    # Native Streamlit bordered container guarantees clean dark/light card rendering
     with st.container(border=True):
-        # Header row inside card
         st.markdown(f"""
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
             <div>
                 <span class="{badge_class}">{badge_label}</span>
                 <span class="{status_class}" style="margin-left: 8px;">{status_label}</span>
             </div>
-            <div style="font-size: 13px; font-weight: 500; color: #8B949E;">
-                ⏱️ Due: <strong style="color: #F0F6FC;">{p['verbal_deadline']}</strong>
+            <div style="font-size: 13px; font-weight: 500; color: {tokens['TEXT_SECONDARY']};">
+                ⏱️ Due: <strong style="color: {tokens['TEXT_PRIMARY']};">{p['verbal_deadline']}</strong>
             </div>
         </div>
-        <div style="font-size: 17px; font-weight: 600; color: #F0F6FC; margin: 0 0 6px 0;">{p['task_title']}</div>
-        <div style="font-size: 14px; color: #C9D1D9; margin-bottom: 12px; line-height: 1.45;">{p['summary']}</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 12.5px; color: #8B949E; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace;">
-            <span>Counterparty: <strong style="color: #F0F6FC;">{p['counterparty_name']}</strong></span>
-            <span>Email: <code style="color: #58A6FF;">{p['counterparty_email']}</code></span>
-            <span>ISO: <code style="color: #8B949E;">{p['iso_deadline']}</code></span>
+        <div style="font-size: 17px; font-weight: 600; color: {tokens['TEXT_PRIMARY']}; margin: 0 0 6px 0;">{p['task_title']}</div>
+        <div style="font-size: 14px; color: {tokens['TEXT_BODY']}; margin-bottom: 12px; line-height: 1.45;">{p['summary']}</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 12.5px; color: {tokens['TEXT_SECONDARY']}; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace;">
+            <span>Counterparty: <strong style="color: {tokens['TEXT_PRIMARY']};">{p['counterparty_name']}</strong></span>
+            <span>Email: <code style="color: {tokens['LINK_COLOR']};">{p['counterparty_email']}</code></span>
+            <span>ISO: <code style="color: {tokens['TEXT_SECONDARY']};">{p['iso_deadline']}</code></span>
         </div>
         """, unsafe_allow_html=True)
         
-        # Properly rendered 3-tab review panel with full visible labels
+        # 3 Distinct Tabs
         tab_todo, tab_email, tab_cal = st.tabs(["📝 Todoist Task", "✉️ Gmail Draft", "📅 Calendar Block"])
         
         with tab_todo:
@@ -568,9 +680,9 @@ for idx, p in enumerate(st.session_state.promises):
                 st.rerun()
                 
         if p["staged"]:
-            st.markdown("""
-            <div style="margin-top: 14px; padding: 10px 14px; background: rgba(35, 134, 54, 0.15); border: 1px solid rgba(46, 160, 67, 0.4); border-radius: 8px; font-size: 13px; color: #3FB950;">
+            st.markdown(f"""
+            <div style="margin-top: 14px; padding: 10px 14px; background: {tokens['BADGE_STAGED_BG']}; border: 1px solid {tokens['BADGE_STAGED_BORDER']}; border-radius: 8px; font-size: 13px; color: {tokens['BADGE_STAGED_TEXT']};">
                 ✓ <b>Staged safely:</b> Created Gmail draft (never auto-sent), added Todoist task, and blocked tentative calendar time.
-                <a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" style="margin-left: 8px; color: #58A6FF; text-decoration: none; font-weight: 600;">View Draft in Gmail ↗</a>
+                <a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" style="margin-left: 8px; color: {tokens['LINK_COLOR']}; text-decoration: none; font-weight: 600;">View Draft in Gmail ↗</a>
             </div>
             """, unsafe_allow_html=True)
