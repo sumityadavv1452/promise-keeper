@@ -1,6 +1,7 @@
 import streamlit as st
 import datetime
 import json
+import base64
 from src.bee_client import BeeClient
 from src.extractor import BedrockPromiseExtractor
 from src.action_router import ActionRouter
@@ -72,6 +73,17 @@ GMAIL_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="
 CALENDAR_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3 4.9 3 6V20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V9H19V20ZM7 11H12V16H7V11Z" fill="#1A73E8"/></svg>'
 TODOIST_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="#E44332"/></svg>'
 
+# Theme Toggle High-Contrast Vector SVGs
+RAW_SUN_ACTIVE = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>'
+RAW_SUN_INACTIVE = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>'
+RAW_MOON_ACTIVE = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>'
+RAW_MOON_INACTIVE = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>'
+
+SUN_ACTIVE_URI = f"data:image/svg+xml;base64,{base64.b64encode(RAW_SUN_ACTIVE.encode('utf-8')).decode('utf-8')}"
+SUN_INACTIVE_URI = f"data:image/svg+xml;base64,{base64.b64encode(RAW_SUN_INACTIVE.encode('utf-8')).decode('utf-8')}"
+MOON_ACTIVE_URI = f"data:image/svg+xml;base64,{base64.b64encode(RAW_MOON_ACTIVE.encode('utf-8')).decode('utf-8')}"
+MOON_INACTIVE_URI = f"data:image/svg+xml;base64,{base64.b64encode(RAW_MOON_INACTIVE.encode('utf-8')).decode('utf-8')}"
+
 # -----------------------------------------------------------------------------
 # 2. Dynamic Enterprise Tokens (Linear / Inji Playground Caliber)
 # -----------------------------------------------------------------------------
@@ -83,6 +95,7 @@ if current_theme == "Dark":
         "BG_SURFACE": "#21262D",
         "BORDER_COL": "#30363D",
         "BORDER_INPUT": "#30363D",
+        "CARD_BORDER": "#30363D",
         "CARD_SHADOW": "0 1px 3px rgba(0, 0, 0, 0.25)",
         "TEXT_PRIMARY": "#F0F6FC",
         "TEXT_SECONDARY": "#8B949E",
@@ -95,6 +108,14 @@ if current_theme == "Dark":
         "TOGGLE_BORDER": "#30363D",
         "TOGGLE_HOVER_BG": "#30363D",
         "TOGGLE_HOVER_COLOR": "#FFFFFF",
+        "THEME_PILL_BG": "#1E293B",
+        "THEME_PILL_BORDER": "#334155",
+        "SUN_BTN_BG": "transparent",
+        "SUN_BTN_SHADOW": "none",
+        "SUN_BTN_ICON": SUN_INACTIVE_URI,
+        "MOON_BTN_BG": "#0F172A",
+        "MOON_BTN_SHADOW": "0 1px 3px rgba(0, 0, 0, 0.4)",
+        "MOON_BTN_ICON": MOON_ACTIVE_URI,
         "BADGE_OUTGOING_BG": "rgba(30, 58, 138, 0.2)",
         "BADGE_OUTGOING_TEXT": "#60A5FA",
         "BADGE_OUTGOING_BORDER": "#1E40AF",
@@ -130,7 +151,8 @@ else:
         "BG_SURFACE": "#F1F5F9",
         "BORDER_COL": "#E2E8F0",
         "BORDER_INPUT": "#CBD5E1",
-        "CARD_SHADOW": "0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03)",
+        "CARD_BORDER": "#E5E7EB",
+        "CARD_SHADOW": "0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02)",
         "TEXT_PRIMARY": "#0F172A",
         "TEXT_SECONDARY": "#64748B",
         "TEXT_BODY": "#334155",
@@ -142,6 +164,14 @@ else:
         "TOGGLE_BORDER": "#CBD5E1",
         "TOGGLE_HOVER_BG": "#E2E8F0",
         "TOGGLE_HOVER_COLOR": "#0F172A",
+        "THEME_PILL_BG": "#F1F5F9",
+        "THEME_PILL_BORDER": "#E2E8F0",
+        "SUN_BTN_BG": "#FFFFFF",
+        "SUN_BTN_SHADOW": "0 1px 3px rgba(0, 0, 0, 0.12)",
+        "SUN_BTN_ICON": SUN_ACTIVE_URI,
+        "MOON_BTN_BG": "transparent",
+        "MOON_BTN_SHADOW": "none",
+        "MOON_BTN_ICON": MOON_INACTIVE_URI,
         "BADGE_OUTGOING_BG": "#EFF6FF",
         "BADGE_OUTGOING_TEXT": "#1D4ED8",
         "BADGE_OUTGOING_BORDER": "#DBEAFE",
@@ -279,7 +309,7 @@ CSS_TEMPLATE = """
     div.st-key-top_navbar {
         background-color: __BG_CARD__ !important;
         border: 1px solid __BORDER_COL__ !important;
-        border-radius: 12px !important;
+        border-radius: 14px !important;
         padding: 12px 20px !important;
         margin-bottom: 20px !important;
         box-shadow: __CARD_SHADOW__ !important;
@@ -357,18 +387,33 @@ CSS_TEMPLATE = """
         display: inline-block;
     }
     
-    /* Theme Toggle Switch Styling */
-    div[data-testid="stToggle"] {
-        margin: 0 !important;
-        padding: 0 !important;
-        display: flex !important;
+    /* Exact Dual-Icon Sun/Moon Segmented Pill Wrapper */
+    div.st-key-theme_pill_container {
+        display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
+        background-color: __THEME_PILL_BG__ !important;
+        border: 1px solid __THEME_PILL_BORDER__ !important;
+        border-radius: 9999px !important;
+        padding: 2px !important;
+        height: 32px !important;
+        box-sizing: border-box !important;
+        width: fit-content !important;
+        margin: 0 auto !important;
     }
-    div[data-testid="stToggle"] label {
-        margin: 0 !important;
+    div.st-key-theme_pill_container > div[data-testid="stLayoutWrapper"],
+    div.st-key-theme_pill_container [data-testid="stHorizontalBlock"] {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 2px !important;
+        width: auto !important;
+    }
+    div.st-key-theme_pill_container [data-testid="stColumn"] {
+        width: auto !important;
+        min-width: 0 !important;
+        flex: 0 0 auto !important;
         padding: 0 !important;
-        cursor: pointer !important;
+        margin: 0 !important;
     }
     
     /* Metric Strip Cards (Image 2 Card Aesthetics) */
@@ -404,20 +449,27 @@ CSS_TEMPLATE = """
         color: __TEXT_SECONDARY__;
     }
     
-    /* Native Container Card (High Contrast Bounding Border for Every Card) */
+    /* All Commitment Card Containers - Strictly Bounded and Elevated */
+    div[class*="st-key-commitment_card"],
+    div[data-testid="stVerticalBlockBorderWrapper"]:has([class*="st-key-commitment_card"]),
     div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: __BG_CARD__ !important;
-        border: 1px solid __BORDER_COL__ !important;
-        border-radius: 12px !important;
-        padding: 20px 22px !important;
-        margin-bottom: 20px !important;
+        border: 1px solid __CARD_BORDER__ !important;
+        border-radius: 14px !important;
+        padding: 24px !important;
+        margin-bottom: 24px !important;
         box-shadow: __CARD_SHADOW__ !important;
         transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
     }
     
+    div[class*="st-key-commitment_card"]:hover {
+        border-color: #2563EB !important;
+    }
+    
     /* Active Focus Card Selection Accent */
+    div[class*="st-key-commitment_card"]:has(.active-focus-indicator),
     div[data-testid="stVerticalBlockBorderWrapper"]:has(.active-focus-indicator) {
-        border: 1.5px solid #2563EB !important;
+        border: 2px solid #2563EB !important;
         box-shadow: 0 4px 14px rgba(37, 99, 235, 0.12) !important;
     }
     
@@ -679,6 +731,75 @@ CSS_TEMPLATE = """
         border-radius: 8px !important;
         min-height: 34px !important;
     }
+
+    /* Segmented Pill Sun and Moon Buttons - Placed after general buttons to guarantee highest specificity */
+    div.st-key-btn_sun,
+    div.st-key-btn_moon {
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+        min-height: 26px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    div.st-key-btn_sun .stButton,
+    div.st-key-btn_moon .stButton {
+        width: 26px !important;
+        height: 26px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    div.st-key-btn_sun button,
+    div.st-key-btn_sun button[kind="secondary"] {
+        background-color: __SUN_BTN_BG__ !important;
+        background-image: url('__SUN_BTN_ICON__') !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: 15px 15px !important;
+        box-shadow: __SUN_BTN_SHADOW__ !important;
+        border: none !important;
+        border-radius: 50% !important;
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+        min-height: 26px !important;
+        max-width: 26px !important;
+        max-height: 26px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        cursor: pointer !important;
+        transition: all 0.15s ease !important;
+    }
+    div.st-key-btn_moon button,
+    div.st-key-btn_moon button[kind="secondary"] {
+        background-color: __MOON_BTN_BG__ !important;
+        background-image: url('__MOON_BTN_ICON__') !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: 14px 14px !important;
+        box-shadow: __MOON_BTN_SHADOW__ !important;
+        border: none !important;
+        border-radius: 50% !important;
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+        min-height: 26px !important;
+        max-width: 26px !important;
+        max-height: 26px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        cursor: pointer !important;
+        transition: all 0.15s ease !important;
+    }
+    div.st-key-btn_sun button:disabled,
+    div.st-key-btn_moon button:disabled {
+        cursor: default !important;
+        opacity: 1 !important;
+    }
+    div.st-key-btn_sun button *,
+    div.st-key-btn_moon button * {
+        display: none !important;
+    }
 </style>
 """
 
@@ -772,7 +893,7 @@ with st.container(key="top_navbar", border=True):
         )
 
     with nav_c3:
-        r_col1, r_col2, r_col3 = st.columns([0.8, 1.2, 1.4], vertical_alignment="center")
+        r_col1, r_col2, r_col3 = st.columns([0.8, 1.1, 1.4], vertical_alignment="center")
         with r_col1:
             st.markdown(
                 '<div style="display: flex; justify-content: flex-end; align-items: center;">'
@@ -781,26 +902,23 @@ with st.container(key="top_navbar", border=True):
                 unsafe_allow_html=True
             )
         with r_col2:
-            # Clean, unbreakable dual-icon toggle pill: ☀️ [ switch ] 🌙
-            t_c1, t_c2, t_c3 = st.columns([0.25, 0.5, 0.25], vertical_alignment="center")
-            with t_c1:
-                sun_opacity = "1" if st.session_state.theme == "Light" else "0.3"
-                st.markdown(f'<div style="text-align:right; font-size:13px; opacity:{sun_opacity}; line-height:1; user-select:none;">☀️</div>', unsafe_allow_html=True)
-            with t_c2:
-                is_dark = st.toggle(
-                    "🌙",
-                    value=(st.session_state.theme == "Dark"),
-                    key="theme_toggle_switch",
-                    label_visibility="collapsed",
-                    help="Switch between Light and Dark mode"
-                )
-                new_theme = "Dark" if is_dark else "Light"
-                if new_theme != st.session_state.theme:
-                    st.session_state.theme = new_theme
-                    st.rerun()
-            with t_c3:
-                moon_opacity = "1" if st.session_state.theme == "Dark" else "0.3"
-                st.markdown(f'<div style="text-align:left; font-size:13px; opacity:{moon_opacity}; line-height:1; user-select:none;">🌙</div>', unsafe_allow_html=True)
+            # Recreate Exact Dual-Icon Sun/Moon Segmented Pill Switch (Inji Playground)
+            with st.container(key="theme_pill_container"):
+                theme_col1, theme_col2 = st.columns([1, 1], gap="small", vertical_alignment="center")
+                if current_theme == "Light":
+                    with theme_col1:
+                        st.button(" ", key="btn_sun", disabled=True)
+                    with theme_col2:
+                        if st.button(" ", key="btn_moon"):
+                            st.session_state.theme = "Dark"
+                            st.rerun()
+                else:
+                    with theme_col1:
+                        if st.button(" ", key="btn_sun"):
+                            st.session_state.theme = "Light"
+                            st.rerun()
+                    with theme_col2:
+                        st.button(" ", key="btn_moon", disabled=True)
         with r_col3:
             if st.button("Sync Stream", key="nav_sync_btn", type="primary", use_container_width=True):
                 with st.spinner("Syncing Bee Wearable speech..."):
@@ -931,7 +1049,7 @@ for idx, p in enumerate(st.session_state.promises):
     is_me = p["direction"] == "MADE_BY_ME"
     is_selected = (idx == selected_idx)
     
-    with st.container(border=True):
+    with st.container(key=f"commitment_card_{idx}", border=True):
         c_chip, c_due = st.columns([3, 1], vertical_alignment="center")
         with c_chip:
             badge_html = '<span class="badge-outgoing">OUTGOING COMMITMENT</span>' if is_me else '<span class="badge-incoming">INCOMING COMMITMENT</span>'
