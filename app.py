@@ -68,7 +68,7 @@ if "tokens_used" not in st.session_state:
     st.session_state.tokens_used = 1140
 
 # -----------------------------------------------------------------------------
-# 2. Dynamic Theme Tokens (Light / Dark)
+# 2. Dynamic Enterprise Tokens (Linear / Inji Playground Caliber)
 # -----------------------------------------------------------------------------
 if current_theme == "Dark":
     tokens = {
@@ -78,6 +78,7 @@ if current_theme == "Dark":
         "BG_SURFACE": "#21262D",
         "BORDER_COL": "#30363D",
         "BORDER_INPUT": "#30363D",
+        "CARD_SHADOW": "0 1px 3px rgba(0, 0, 0, 0.3)",
         "TEXT_PRIMARY": "#F0F6FC",
         "TEXT_SECONDARY": "#8B949E",
         "TEXT_BODY": "#C9D1D9",
@@ -89,15 +90,21 @@ if current_theme == "Dark":
         "TOGGLE_BORDER": "#30363D",
         "TOGGLE_HOVER_BG": "#30363D",
         "TOGGLE_HOVER_COLOR": "#FFFFFF",
-        "BADGE_BY_BG": "rgba(31, 111, 235, 0.15)",
-        "BADGE_BY_BORDER": "rgba(56, 139, 253, 0.4)",
-        "BADGE_BY_TEXT": "#58A6FF",
-        "BADGE_TO_BG": "rgba(210, 153, 34, 0.15)",
-        "BADGE_TO_BORDER": "rgba(210, 153, 34, 0.4)",
-        "BADGE_TO_TEXT": "#D29922",
+        "BADGE_OUTGOING_BG": "rgba(30, 58, 138, 0.2)",
+        "BADGE_OUTGOING_TEXT": "#60A5FA",
+        "BADGE_OUTGOING_BORDER": "#1E40AF",
+        "BADGE_INCOMING_BG": "rgba(120, 53, 15, 0.2)",
+        "BADGE_INCOMING_TEXT": "#FBBF24",
+        "BADGE_INCOMING_BORDER": "#92400E",
+        "BADGE_STATUS_BG": "#21262D",
+        "BADGE_STATUS_TEXT": "#8B949E",
+        "BADGE_STATUS_BORDER": "#30363D",
         "BADGE_STAGED_BG": "rgba(35, 134, 54, 0.2)",
-        "BADGE_STAGED_BORDER": "#238636",
         "BADGE_STAGED_TEXT": "#3FB950",
+        "BADGE_STAGED_BORDER": "#238636",
+        "BADGE_FOCUS_BG": "rgba(37, 99, 235, 0.2)",
+        "BADGE_FOCUS_TEXT": "#58A6FF",
+        "BADGE_FOCUS_BORDER": "rgba(56, 139, 253, 0.4)",
         "BTN_PRIMARY_BG": "#238636",
         "BTN_PRIMARY_HOVER": "#2EA043",
         "BTN_PRIMARY_TEXT": "#FFFFFF",
@@ -109,51 +116,62 @@ if current_theme == "Dark":
         "LINK_COLOR": "#58A6FF",
         "PILL_ACTIVE_BG": "#21262D",
         "PILL_ACTIVE_TEXT": "#F0F6FC",
+        "SEG_BG": "#161B22",
+        "SEG_ACTIVE_BG": "#21262D",
     }
 else:
     tokens = {
-        "BG_CANVAS": "#F9FAFB",
+        "BG_CANVAS": "#F8FAFC",
         "BG_CARD": "#FFFFFF",
         "BG_INPUT": "#FFFFFF",
-        "BG_SURFACE": "#F3F4F6",
-        "BORDER_COL": "#E5E7EB",
-        "BORDER_INPUT": "#D1D5DB",
-        "TEXT_PRIMARY": "#111827",
-        "TEXT_SECONDARY": "#6B7280",
-        "TEXT_BODY": "#374151",
+        "BG_SURFACE": "#F1F5F9",
+        "BORDER_COL": "#CBD5E1",
+        "BORDER_INPUT": "#CBD5E1",
+        "CARD_SHADOW": "0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03)",
+        "TEXT_PRIMARY": "#0F172A",
+        "TEXT_SECONDARY": "#64748B",
+        "TEXT_BODY": "#334155",
         "SIDEBAR_BG": "#FFFFFF",
-        "SIDEBAR_CARD_BG": "#F9FAFB",
-        "SIDEBAR_BORDER": "#E5E7EB",
-        "TOGGLE_COLOR": "#1F2937",
-        "TOGGLE_BG": "#F3F4F6",
-        "TOGGLE_BORDER": "#E5E7EB",
-        "TOGGLE_HOVER_BG": "#E5E7EB",
-        "TOGGLE_HOVER_COLOR": "#111827",
-        "BADGE_BY_BG": "#EFF6FF",
-        "BADGE_BY_BORDER": "#BFDBFE",
-        "BADGE_BY_TEXT": "#1D4ED8",
-        "BADGE_TO_BG": "#FEF3C7",
-        "BADGE_TO_BORDER": "#FDE68A",
-        "BADGE_TO_TEXT": "#B45309",
+        "SIDEBAR_CARD_BG": "#F8FAFC",
+        "SIDEBAR_BORDER": "#E2E8F0",
+        "TOGGLE_COLOR": "#1E293B",
+        "TOGGLE_BG": "#F1F5F9",
+        "TOGGLE_BORDER": "#CBD5E1",
+        "TOGGLE_HOVER_BG": "#E2E8F0",
+        "TOGGLE_HOVER_COLOR": "#0F172A",
+        "BADGE_OUTGOING_BG": "#EFF6FF",
+        "BADGE_OUTGOING_TEXT": "#1D4ED8",
+        "BADGE_OUTGOING_BORDER": "#DBEAFE",
+        "BADGE_INCOMING_BG": "#FEF3C7",
+        "BADGE_INCOMING_TEXT": "#B45309",
+        "BADGE_INCOMING_BORDER": "#FDE68A",
+        "BADGE_STATUS_BG": "#F1F5F9",
+        "BADGE_STATUS_TEXT": "#475569",
+        "BADGE_STATUS_BORDER": "#E2E8F0",
         "BADGE_STAGED_BG": "#ECFDF5",
-        "BADGE_STAGED_BORDER": "#A7F3D0",
         "BADGE_STAGED_TEXT": "#047857",
-        "BTN_PRIMARY_BG": "#111827",
-        "BTN_PRIMARY_HOVER": "#1F2937",
+        "BADGE_STAGED_BORDER": "#A7F3D0",
+        "BADGE_FOCUS_BG": "#EFF6FF",
+        "BADGE_FOCUS_TEXT": "#2563EB",
+        "BADGE_FOCUS_BORDER": "#BFDBFE",
+        "BTN_PRIMARY_BG": "#0F172A",
+        "BTN_PRIMARY_HOVER": "#1E293B",
         "BTN_PRIMARY_TEXT": "#FFFFFF",
         "BTN_SEC_BG": "#FFFFFF",
-        "BTN_SEC_HOVER": "#F3F4F6",
-        "BTN_SEC_BORDER": "#E5E7EB",
-        "BTN_SEC_TEXT": "#1F2937",
-        "DRAWER_BG": "#F9FAFB",
+        "BTN_SEC_HOVER": "#F8FAFC",
+        "BTN_SEC_BORDER": "#CBD5E1",
+        "BTN_SEC_TEXT": "#0F172A",
+        "DRAWER_BG": "#F8FAFC",
         "LINK_COLOR": "#2563EB",
-        "PILL_ACTIVE_BG": "#E5E7EB",
-        "PILL_ACTIVE_TEXT": "#111827",
+        "PILL_ACTIVE_BG": "#E2E8F0",
+        "PILL_ACTIVE_TEXT": "#0F172A",
+        "SEG_BG": "#F1F5F9",
+        "SEG_ACTIVE_BG": "#FFFFFF",
     }
 
 CSS_TEMPLATE = """
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;650;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550;600;650;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
     
     /* Global Canvas */
     html, body, [class*="css"] {
@@ -213,7 +231,7 @@ CSS_TEMPLATE = """
         border-color: __TOGGLE_BORDER__ !important;
     }
 
-    /* Ensure svg inside toggle button is always razor-sharp */
+    /* Ensure svg inside toggle button is razor-sharp */
     header[data-testid="stHeader"] button svg,
     [data-testid="stSidebarCollapseButton"] button svg,
     [data-testid="stSidebarCollapseButton"] svg,
@@ -256,15 +274,15 @@ CSS_TEMPLATE = """
         max-width: 1200px;
     }
     
-    /* Top Header & Navbar Container (Image 2 / Inji Playground Aesthetics) */
+    /* Top Header & Navbar Container (Inji Playground / Linear Style) */
     div.st-key-top_navbar div[data-testid="stVerticalBlockBorderWrapper"],
     div.st-key-top_navbar {
         background-color: __BG_CARD__ !important;
         border: 1px solid __BORDER_COL__ !important;
-        border-radius: 14px !important;
+        border-radius: 12px !important;
         padding: 12px 20px !important;
-        margin-bottom: 22px !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+        margin-bottom: 20px !important;
+        box-shadow: __CARD_SHADOW__ !important;
     }
     div.st-key-top_navbar div[data-testid="stVerticalBlockBorderWrapper"]:hover {
         border-color: __BORDER_COL__ !important;
@@ -286,7 +304,7 @@ CSS_TEMPLATE = """
         border: 1px solid __BORDER_COL__;
         color: __TEXT_SECONDARY__;
         padding: 3px 8px;
-        border-radius: 9999px;
+        border-radius: 6px;
     }
     .brand-tagline {
         font-size: 12.5px;
@@ -302,18 +320,17 @@ CSS_TEMPLATE = """
         color: __PILL_ACTIVE_TEXT__;
         font-size: 13px;
         font-weight: 600;
-        padding: 6px 14px;
-        border-radius: 9999px;
+        padding: 5px 14px;
+        border-radius: 6px;
         display: inline-block;
         border: 1px solid __BORDER_COL__;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.04);
     }
     .nav-pill {
         color: __TEXT_SECONDARY__;
         font-size: 13px;
         font-weight: 500;
-        padding: 6px 14px;
-        border-radius: 9999px;
+        padding: 5px 14px;
+        border-radius: 6px;
         display: inline-block;
         background: transparent;
         border: 1px solid transparent;
@@ -324,10 +341,10 @@ CSS_TEMPLATE = """
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 6px 12px;
+        padding: 5px 12px;
         background: __BG_SURFACE__;
         border: 1px solid __BORDER_COL__;
-        border-radius: 9999px;
+        border-radius: 6px;
         font-size: 12px;
         font-weight: 600;
         color: __TEXT_BODY__;
@@ -340,13 +357,37 @@ CSS_TEMPLATE = """
         display: inline-block;
     }
     
+    /* Segmented Control Styling */
+    div[data-testid="stSegmentedControl"] {
+        background-color: __SEG_BG__ !important;
+        border: 1px solid __BORDER_COL__ !important;
+        border-radius: 8px !important;
+        padding: 2px !important;
+    }
+    div[data-testid="stSegmentedControl"] button {
+        border: none !important;
+        border-radius: 6px !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        padding: 4px 12px !important;
+        background: transparent !important;
+        color: __TEXT_SECONDARY__ !important;
+    }
+    div[data-testid="stSegmentedControl"] button[aria-checked="true"],
+    div[data-testid="stSegmentedControl"] button[data-checked="true"] {
+        background: __SEG_ACTIVE_BG__ !important;
+        color: __TEXT_PRIMARY__ !important;
+        font-weight: 600 !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.08) !important;
+    }
+    
     /* Metric Strip Cards (Image 2 Card Aesthetics) */
     .metric-card {
         background: __BG_CARD__;
         border: 1px solid __BORDER_COL__;
-        border-radius: 14px;
+        border-radius: 12px;
         padding: 16px 20px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        box-shadow: __CARD_SHADOW__;
         transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
     .metric-card:hover {
@@ -373,15 +414,87 @@ CSS_TEMPLATE = """
         color: __TEXT_SECONDARY__;
     }
     
-    /* Native Container Card (Image 2 Rounded 12-16px Cards) */
+    /* Native Container Card (Enterprise SaaS 12-14px Rounded Cards) */
     div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: __BG_CARD__ !important;
         border: 1px solid __BORDER_COL__ !important;
-        border-radius: 14px !important;
-        padding: 22px !important;
+        border-radius: 12px !important;
+        padding: 20px 22px !important;
         margin-bottom: 18px !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+        box-shadow: __CARD_SHADOW__ !important;
         transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+    }
+    
+    /* Active Focus Card Selection Accent */
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.active-focus-indicator) {
+        border: 1.5px solid #2563EB !important;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.12) !important;
+    }
+    
+    /* Professional Text Badges */
+    .badge-outgoing {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 6px;
+        background: __BADGE_OUTGOING_BG__;
+        color: __BADGE_OUTGOING_TEXT__;
+        border: 1px solid __BADGE_OUTGOING_BORDER__;
+    }
+    
+    .badge-incoming {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 6px;
+        background: __BADGE_INCOMING_BG__;
+        color: __BADGE_INCOMING_TEXT__;
+        border: 1px solid __BADGE_INCOMING_BORDER__;
+    }
+    
+    .badge-status {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 6px;
+        background: __BADGE_STATUS_BG__;
+        color: __BADGE_STATUS_TEXT__;
+        border: 1px solid __BADGE_STATUS_BORDER__;
+    }
+    
+    .badge-status-staged {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 6px;
+        background: __BADGE_STAGED_BG__;
+        color: __BADGE_STAGED_TEXT__;
+        border: 1px solid __BADGE_STAGED_BORDER__;
+    }
+    
+    .badge-active-focus {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 6px;
+        background: __BADGE_FOCUS_BG__;
+        color: __BADGE_FOCUS_TEXT__;
+        border: 1px solid __BADGE_FOCUS_BORDER__;
     }
     
     /* Headings & Text */
@@ -390,7 +503,7 @@ CSS_TEMPLATE = """
         font-family: 'Inter', sans-serif !important;
     }
     h3 {
-        font-size: 17px !important;
+        font-size: 16.5px !important;
         font-weight: 650 !important;
         letter-spacing: -0.01em !important;
         margin: 8px 0 4px 0 !important;
@@ -442,7 +555,7 @@ CSS_TEMPLATE = """
     .sidebar-section {
         background: __SIDEBAR_CARD_BG__ !important;
         border: 1px solid __BORDER_COL__ !important;
-        border-radius: 12px !important;
+        border-radius: 10px !important;
         padding: 14px 16px !important;
         margin-bottom: 16px !important;
     }
@@ -485,7 +598,7 @@ CSS_TEMPLATE = """
     /* Tabs Styling */
     div[data-testid="stTabs"] button[role="tab"] {
         color: __TEXT_SECONDARY__ !important;
-        font-size: 13.5px !important;
+        font-size: 13px !important;
         font-weight: 500 !important;
         padding: 8px 16px !important;
         border-bottom: 2px solid transparent !important;
@@ -494,7 +607,7 @@ CSS_TEMPLATE = """
     div[data-testid="stTabs"] button[data-baseweb="tab"] p,
     div[data-testid="stTabs"] button span {
         color: __TEXT_SECONDARY__ !important;
-        font-size: 13.5px !important;
+        font-size: 13px !important;
         font-weight: 500 !important;
         margin: 0 !important;
     }
@@ -529,49 +642,60 @@ CSS_TEMPLATE = """
         box-shadow: 0 0 0 1px #2563EB !important;
     }
     
-    /* Pill Buttons */
+    /* Enterprise Button Styling */
     button[kind="primary"], .stButton > button[kind="primary"] {
         background-color: __BTN_PRIMARY_BG__ !important;
         color: __BTN_PRIMARY_TEXT__ !important;
-        border: 1px solid rgba(240, 246, 252, 0.1) !important;
-        border-radius: 9999px !important;
-        font-weight: 600 !important;
+        border: 1px solid __BTN_PRIMARY_BG__ !important;
+        border-radius: 8px !important;
+        font-weight: 550 !important;
         font-size: 13.5px !important;
         letter-spacing: -0.01em !important;
+        padding: 6px 16px !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.06) !important;
         transition: all 0.15s ease !important;
     }
     button[kind="primary"]:hover {
         background-color: __BTN_PRIMARY_HOVER__ !important;
+        border-color: __BTN_PRIMARY_HOVER__ !important;
+    }
+    button[kind="primary"] p, button[kind="primary"] span {
+        color: #FFFFFF !important;
+        font-weight: 550 !important;
     }
     
     button[kind="secondary"], .stButton > button[kind="secondary"], .stButton > button {
         background-color: __BTN_SEC_BG__ !important;
         color: __BTN_SEC_TEXT__ !important;
         border: 1px solid __BTN_SEC_BORDER__ !important;
-        border-radius: 9999px !important;
+        border-radius: 8px !important;
         font-weight: 500 !important;
         font-size: 13.5px !important;
         letter-spacing: -0.01em !important;
+        padding: 6px 16px !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
         transition: all 0.15s ease !important;
     }
     button[kind="secondary"]:hover, .stButton > button:hover {
         background-color: __BTN_SEC_HOVER__ !important;
         color: __TEXT_PRIMARY__ !important;
+        border-color: __BORDER_COL__ !important;
+    }
+    button[kind="secondary"] p, button[kind="secondary"] span {
+        color: __BTN_SEC_TEXT__ !important;
+        font-weight: 500 !important;
+    }
+    button[kind="secondary"]:hover p, button[kind="secondary"]:hover span {
+        color: __TEXT_PRIMARY__ !important;
     }
     
     /* Top Nav specific controls */
-    div.st-key-nav_theme_btn button {
-        font-size: 16px !important;
-        padding: 5px 12px !important;
-        border-radius: 9999px !important;
-        min-height: 36px !important;
-    }
     div.st-key-nav_sync_btn button {
         font-size: 13px !important;
         font-weight: 600 !important;
         padding: 5px 14px !important;
-        border-radius: 9999px !important;
-        min-height: 36px !important;
+        border-radius: 8px !important;
+        min-height: 34px !important;
     }
 </style>
 """
@@ -590,7 +714,7 @@ with st.sidebar:
     st.markdown("### Runtime Daemon")
     st.markdown(
         '<div class="sidebar-section">'
-        '<div class="sidebar-row"><span>Daemon Status</span><span class="sidebar-val" style="color: #10B981;">● Active</span></div>'
+        '<div class="sidebar-row"><span>Daemon Status</span><span class="sidebar-val" style="color: #10B981;">Active</span></div>'
         '<div class="sidebar-row"><span>Daemon Port</span><span class="sidebar-val">4242</span></div>'
         '<div class="sidebar-row"><span>Hardware Node</span><span class="sidebar-val">Pendant 0x91B2</span></div>'
         '<div class="sidebar-row"><span>Battery Level</span><span class="sidebar-val">92%</span></div>'
@@ -609,9 +733,9 @@ with st.sidebar:
     st.markdown("### Staging Destinations")
     st.markdown(
         '<div class="sidebar-section">'
-        '<p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" class="sidebar-link">✉️ Open Gmail Drafts ↗</a></p>'
-        '<p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://calendar.google.com/" target="_blank" class="sidebar-link">📅 Open Google Calendar ↗</a></p>'
-        '<p style="margin: 0; font-size: 13px;"><a href="https://app.todoist.com/" target="_blank" class="sidebar-link">📝 Open Todoist App ↗</a></p>'
+        '<p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" class="sidebar-link">Gmail Drafts ↗</a></p>'
+        '<p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://calendar.google.com/" target="_blank" class="sidebar-link">Google Calendar ↗</a></p>'
+        '<p style="margin: 0; font-size: 13px;"><a href="https://app.todoist.com/" target="_blank" class="sidebar-link">Todoist Tasks ↗</a></p>'
         '</div>',
         unsafe_allow_html=True
     )
@@ -629,7 +753,7 @@ with st.sidebar:
     )
 
 # -----------------------------------------------------------------------------
-# 4. Top Header & Navbar (Styled exactly like Image 2 / Inji Playground)
+# 4. Top Header & Navbar (Linear / Inji Playground Enterprise Aesthetics)
 # -----------------------------------------------------------------------------
 with st.container(key="top_navbar", border=True):
     nav_c1, nav_c2, nav_c3 = st.columns([3.8, 3.2, 3.0], vertical_alignment="center")
@@ -640,7 +764,7 @@ with st.container(key="top_navbar", border=True):
             '<span class="brand-title">✦ Promise Keeper</span>'
             '<span class="version-pill">Bee v1.4.2 · Bedrock Nova Pro</span>'
             '</div>'
-            '<div class="brand-tagline">“You said it. We’ll remember it.”</div>',
+            '<div class="brand-tagline">You said it. We’ll remember it.</div>',
             unsafe_allow_html=True
         )
 
@@ -654,7 +778,7 @@ with st.container(key="top_navbar", border=True):
         )
 
     with nav_c3:
-        r_col1, r_col2, r_col3 = st.columns([1.1, 0.9, 1.4], vertical_alignment="center")
+        r_col1, r_col2, r_col3 = st.columns([0.9, 1.4, 1.3], vertical_alignment="center")
         with r_col1:
             st.markdown(
                 '<div style="display: flex; justify-content: flex-end; align-items: center;">'
@@ -663,17 +787,19 @@ with st.container(key="top_navbar", border=True):
                 unsafe_allow_html=True
             )
         with r_col2:
-            # Streamlined theme toggle with strictly ☀️ and 🌙 (no computer icon)
-            if current_theme == "Dark":
-                if st.button("☀️", key="nav_theme_btn", help="Switch to Light Theme", use_container_width=True):
-                    st.session_state.theme = "Light"
-                    st.rerun()
-            else:
-                if st.button("🌙", key="nav_theme_btn", help="Switch to Dark Theme", use_container_width=True):
-                    st.session_state.theme = "Dark"
-                    st.rerun()
+            # Sleek Segmented Control for Light / Dark (No Emojis, No Monitor Icon)
+            theme_choice = st.segmented_control(
+                "Theme",
+                options=["Dark", "Light"],
+                default=st.session_state.theme,
+                label_visibility="collapsed",
+                key="theme_toggle_seg"
+            )
+            if theme_choice and theme_choice != st.session_state.theme:
+                st.session_state.theme = theme_choice
+                st.rerun()
         with r_col3:
-            if st.button("↻ Sync", key="nav_sync_btn", type="primary", use_container_width=True):
+            if st.button("Sync Stream", key="nav_sync_btn", type="primary", use_container_width=True):
                 with st.spinner("Syncing Bee Wearable speech..."):
                     bee = BeeClient()
                     data = bee.fetch_recent_conversations()
@@ -686,10 +812,10 @@ with st.container(key="top_navbar", border=True):
                     except Exception:
                         st.session_state.latency_ms = 295
                         st.session_state.tokens_used = 1240
-                    st.toast("Sync complete! Extracted latest commitments from wearable audio.", icon="✅")
+                    st.toast("Sync complete: extracted latest commitments from wearable audio.", icon="✅")
 
 # -----------------------------------------------------------------------------
-# 5. High-Density Metric Strip (Image 2 Card Aesthetics)
+# 5. High-Density Metric Strip (Enterprise SaaS Cards)
 # -----------------------------------------------------------------------------
 m1, m2, m3, m4 = st.columns(4)
 
@@ -739,10 +865,10 @@ st.write("")
 # -----------------------------------------------------------------------------
 # 6. Action Control Strip
 # -----------------------------------------------------------------------------
-c_left, c_mid, c_right = st.columns([1.5, 1.5, 5])
+c_left, c_mid, c_right = st.columns([1.5, 1.8, 4.7])
 
 with c_left:
-    if st.button("🎙️ Sync from Bee", use_container_width=True):
+    if st.button("Sync from Bee", use_container_width=True):
         with st.spinner("Querying Bee CLI via 'bee now --json'..."):
             bee = BeeClient()
             data = bee.fetch_recent_conversations()
@@ -755,10 +881,10 @@ with c_left:
             except Exception:
                 st.session_state.latency_ms = 295
                 st.session_state.tokens_used = 1240
-            st.toast("Sync complete! Extracted latest commitments from wearable audio.", icon="✅")
+            st.toast("Sync complete: extracted latest commitments from wearable audio.", icon="✅")
 
 with c_mid:
-    if st.button("⚡ One-Tap Stage All (2)", use_container_width=True):
+    if st.button("Stage All Commitments (2)", use_container_width=True):
         router = ActionRouter()
         for p in st.session_state.promises:
             p["staged"] = True
@@ -766,11 +892,11 @@ with c_mid:
             router.stage_gmail_draft(p["counterparty_email"], p["email_subject"], p["email_body"])
             router.stage_calendar_event(p["calendar_title"], p["iso_deadline"], p["calendar_duration"])
         st.session_state.staged_count = len(st.session_state.promises)
-        st.toast("All 2 commitments staged! Gmail drafts and calendar blocks ready.", icon="🚀")
+        st.toast("All 2 commitments staged: Gmail drafts and calendar blocks ready.", icon="✅")
         st.rerun()
 
 with c_right:
-    if st.button("Reset Session", use_container_width=False):
+    if st.button("Reset Pipeline", use_container_width=False):
         for p in st.session_state.promises:
             p["staged"] = False
         st.session_state.staged_count = 0
@@ -779,7 +905,7 @@ with c_right:
 # -----------------------------------------------------------------------------
 # 7. Collapsible Transcript Stream Drawer
 # -----------------------------------------------------------------------------
-with st.expander("🎙️ Bee Ambient Transcript Stream (Click to inspect recorded turns)", expanded=False):
+with st.expander("Ambient Transcript Stream (Bee Pendant 0x91B2)", expanded=False):
     st.markdown(
         f'<div style="background: {tokens["DRAWER_BG"]}; border: 1px solid {tokens["BORDER_COL"]}; border-radius: 8px; padding: 14px 18px; font-family: \'JetBrains Mono\', monospace; font-size: 12.5px; color: {tokens["TEXT_BODY"]}; line-height: 1.6;">'
         '<div>[09:41:04] Device: Bee Pendant 0x91B2 · Diarization Engine Active · Audio Stream 16kHz</div>'
@@ -793,44 +919,38 @@ with st.expander("🎙️ Bee Ambient Transcript Stream (Click to inspect record
 st.markdown(f"<h2 style='font-size: 18px; font-weight: 600; color: {tokens['TEXT_PRIMARY']}; margin: 24px 0 16px 0;'>Commitments Pending Review</h2>", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 8. Render Commitments in Structured Cards with Active Highlight (Image 2)
+# 8. Render Commitments in Structured Cards with Clean Bounding Borders
 # -----------------------------------------------------------------------------
 selected_idx = st.session_state.get("selected_idx", 0)
-
-# Inject active card highlight border and subtle shadow for the selected card
-st.markdown(
-    f'<style>'
-    f'div.st-key-commitment_card_{selected_idx} div[data-testid="stVerticalBlockBorderWrapper"], '
-    f'div.st-key-commitment_card_{selected_idx} {{'
-    f' border: 2px solid #2563EB !important;'
-    f' box-shadow: 0 4px 16px rgba(37, 99, 235, 0.14) !important;'
-    f'}}'
-    f'</style>',
-    unsafe_allow_html=True
-)
-
 router = ActionRouter()
 
 for idx, p in enumerate(st.session_state.promises):
     is_me = p["direction"] == "MADE_BY_ME"
-    badge_label = "📤 Promise Made by Me" if is_me else "📥 Commitment to Me"
-    status_label = "✅ Staged Safely" if p["staged"] else "Pending Review"
     is_selected = (idx == selected_idx)
     
-    with st.container(key=f"commitment_card_{idx}", border=True):
+    with st.container(border=True):
         c_chip, c_due = st.columns([3, 1], vertical_alignment="center")
         with c_chip:
-            focus_tag = " · `Active Focus`" if is_selected else ""
-            st.markdown(f"**{badge_label}** · `{status_label}`{focus_tag}")
+            badge_html = '<span class="badge-outgoing">OUTGOING COMMITMENT</span>' if is_me else '<span class="badge-incoming">INCOMING COMMITMENT</span>'
+            status_html = '<span class="badge-status-staged">STAGED SAFELY</span>' if p["staged"] else '<span class="badge-status">PENDING REVIEW</span>'
+            focus_html = '<span class="badge-active-focus">ACTIVE FOCUS</span>' if is_selected else ''
+            focus_marker = '<span class="active-focus-indicator" style="display:none;"></span>' if is_selected else ''
+            st.markdown(
+                f'<div style="display:flex; align-items:center; gap:8px;">{badge_html}{status_html}{focus_html}{focus_marker}</div>',
+                unsafe_allow_html=True
+            )
         with c_due:
-            st.caption(f"⏱️ Due: **{p['verbal_deadline']}**")
+            st.markdown(
+                f'<div style="text-align:right; font-size:12.5px; color:{tokens["TEXT_SECONDARY"]};">Due: <strong style="color:{tokens["TEXT_PRIMARY"]};">{p["verbal_deadline"]}</strong></div>',
+                unsafe_allow_html=True
+            )
         
         st.markdown(f"### {p['task_title']}")
         st.write(p['summary'])
-        st.caption(f"👤 Counterparty: **{p['counterparty_name']}** | ✉️ `{p['counterparty_email']}` | ISO: `{p['iso_deadline']}`")
+        st.caption(f"Counterparty: **{p['counterparty_name']}** · Email: `{p['counterparty_email']}` · ISO: `{p['iso_deadline']}`")
         
-        # 3 Clean Native Tabs with full legible labels
-        tab_todo, tab_email, tab_cal = st.tabs(["📝 Todoist Task", "✉️ Gmail Draft", "📅 Calendar Block"])
+        # 3 Clean Native Tabs with full legible labels without emojis
+        tab_todo, tab_email, tab_cal = st.tabs(["Todoist Task", "Gmail Draft", "Calendar Event"])
         
         with tab_todo:
             t_col1, t_col2 = st.columns([3, 1])
@@ -853,14 +973,14 @@ for idx, p in enumerate(st.session_state.promises):
                 p["calendar_title"] = st.text_input("Event Name", value=p["calendar_title"], key=f"cal_{idx}")
             with c_col2:
                 p["calendar_duration"] = st.number_input("Duration (min)", value=p["calendar_duration"], step=15, key=f"dur_{idx}")
-            st.caption("ℹ️ Staged status will be marked as 'tentative' to avoid overwriting existing schedules.")
+            st.caption("Staged status will be marked as 'tentative' to avoid overwriting existing schedules.")
         
         st.write("")
         
         # Action Footer
         b_col1, b_col2, b_col3 = st.columns([2, 1, 4])
         with b_col1:
-            btn_label = "✓ Commitment Staged" if p["staged"] else "✅ Approve & Stage Action"
+            btn_label = "Commitment Staged" if p["staged"] else "Approve & Stage Action"
             if st.button(btn_label, key=f"approve_{idx}", disabled=p["staged"], type="primary", use_container_width=True):
                 p["staged"] = True
                 router.stage_todoist(p["task_title"], p["verbal_deadline"])
@@ -877,9 +997,9 @@ for idx, p in enumerate(st.session_state.promises):
                 
         with b_col3:
             if not is_selected:
-                if st.button("Focus Card", key=f"focus_{idx}", type="secondary"):
+                if st.button("Select Card", key=f"focus_{idx}", type="secondary"):
                     st.session_state.selected_idx = idx
                     st.rerun()
                 
         if p["staged"]:
-            st.success("✓ **Staged safely:** Created Gmail draft (never auto-sent), added Todoist task, and blocked tentative calendar time. [View Draft in Gmail ↗](https://mail.google.com/mail/u/0/#drafts)")
+            st.success("Staged safely: Created Gmail draft (never auto-sent), added Todoist task, and blocked tentative calendar time. [View Draft in Gmail ↗](https://mail.google.com/mail/u/0/#drafts)")
