@@ -7,7 +7,7 @@ from src.action_router import ActionRouter
 from src.telemetry import TelemetryRecorder
 
 # -----------------------------------------------------------------------------
-# 1. Page Configuration & Theme Initialization
+# 1. Page Configuration & Theme Initialization (Default to Light Mode)
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="Promise Keeper — Wearable AI Engine",
@@ -17,7 +17,7 @@ st.set_page_config(
 )
 
 if "theme" not in st.session_state:
-    st.session_state.theme = "Dark"
+    st.session_state.theme = "Light"
 
 current_theme = st.session_state.theme
 
@@ -67,6 +67,11 @@ if "latency_ms" not in st.session_state:
 if "tokens_used" not in st.session_state:
     st.session_state.tokens_used = 1140
 
+# Official Vector Brand Logos
+GMAIL_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6ZM20 6L12 11L4 6H20ZM20 18H4V8L12 13L20 8V18Z" fill="#EA4335"/></svg>'
+CALENDAR_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3 4.9 3 6V20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V9H19V20ZM7 11H12V16H7V11Z" fill="#1A73E8"/></svg>'
+TODOIST_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="#E44332"/></svg>'
+
 # -----------------------------------------------------------------------------
 # 2. Dynamic Enterprise Tokens (Linear / Inji Playground Caliber)
 # -----------------------------------------------------------------------------
@@ -78,7 +83,7 @@ if current_theme == "Dark":
         "BG_SURFACE": "#21262D",
         "BORDER_COL": "#30363D",
         "BORDER_INPUT": "#30363D",
-        "CARD_SHADOW": "0 1px 3px rgba(0, 0, 0, 0.3)",
+        "CARD_SHADOW": "0 1px 3px rgba(0, 0, 0, 0.25)",
         "TEXT_PRIMARY": "#F0F6FC",
         "TEXT_SECONDARY": "#8B949E",
         "TEXT_BODY": "#C9D1D9",
@@ -90,6 +95,9 @@ if current_theme == "Dark":
         "TOGGLE_BORDER": "#30363D",
         "TOGGLE_HOVER_BG": "#30363D",
         "TOGGLE_HOVER_COLOR": "#FFFFFF",
+        "TOGGLE_PILL_BG": "#21262D",
+        "TOGGLE_PILL_BORDER": "#30363D",
+        "THUMB_BG": "#30363D",
         "BADGE_OUTGOING_BG": "rgba(30, 58, 138, 0.2)",
         "BADGE_OUTGOING_TEXT": "#60A5FA",
         "BADGE_OUTGOING_BORDER": "#1E40AF",
@@ -116,8 +124,6 @@ if current_theme == "Dark":
         "LINK_COLOR": "#58A6FF",
         "PILL_ACTIVE_BG": "#21262D",
         "PILL_ACTIVE_TEXT": "#F0F6FC",
-        "SEG_BG": "#161B22",
-        "SEG_ACTIVE_BG": "#21262D",
     }
 else:
     tokens = {
@@ -125,7 +131,7 @@ else:
         "BG_CARD": "#FFFFFF",
         "BG_INPUT": "#FFFFFF",
         "BG_SURFACE": "#F1F5F9",
-        "BORDER_COL": "#CBD5E1",
+        "BORDER_COL": "#E2E8F0",
         "BORDER_INPUT": "#CBD5E1",
         "CARD_SHADOW": "0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03)",
         "TEXT_PRIMARY": "#0F172A",
@@ -139,6 +145,9 @@ else:
         "TOGGLE_BORDER": "#CBD5E1",
         "TOGGLE_HOVER_BG": "#E2E8F0",
         "TOGGLE_HOVER_COLOR": "#0F172A",
+        "TOGGLE_PILL_BG": "#F1F4F9",
+        "TOGGLE_PILL_BORDER": "#E5E7EB",
+        "THUMB_BG": "#FFFFFF",
         "BADGE_OUTGOING_BG": "#EFF6FF",
         "BADGE_OUTGOING_TEXT": "#1D4ED8",
         "BADGE_OUTGOING_BORDER": "#DBEAFE",
@@ -165,8 +174,6 @@ else:
         "LINK_COLOR": "#2563EB",
         "PILL_ACTIVE_BG": "#E2E8F0",
         "PILL_ACTIVE_TEXT": "#0F172A",
-        "SEG_BG": "#F1F5F9",
-        "SEG_ACTIVE_BG": "#FFFFFF",
     }
 
 CSS_TEMPLATE = """
@@ -231,7 +238,6 @@ CSS_TEMPLATE = """
         border-color: __TOGGLE_BORDER__ !important;
     }
 
-    /* Ensure svg inside toggle button is razor-sharp */
     header[data-testid="stHeader"] button svg,
     [data-testid="stSidebarCollapseButton"] button svg,
     [data-testid="stSidebarCollapseButton"] svg,
@@ -357,28 +363,80 @@ CSS_TEMPLATE = """
         display: inline-block;
     }
     
-    /* Segmented Control Styling */
+    /* Exact Dual-Icon Sun/Moon Segmented Pill Toggle */
     div[data-testid="stSegmentedControl"] {
-        background-color: __SEG_BG__ !important;
-        border: 1px solid __BORDER_COL__ !important;
-        border-radius: 8px !important;
-        padding: 2px !important;
+        height: 32px !important;
+        background: __TOGGLE_PILL_BG__ !important;
+        border-radius: 9999px !important;
+        padding: 2px 4px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        border: 1px solid __TOGGLE_PILL_BORDER__ !important;
+        width: auto !important;
+    }
+    div[data-testid="stSegmentedControl"] button p,
+    div[data-testid="stSegmentedControl"] button span {
+        display: none !important;
+        visibility: hidden !important;
     }
     div[data-testid="stSegmentedControl"] button {
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+        min-height: 26px !important;
+        border-radius: 50% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         border: none !important;
-        border-radius: 6px !important;
-        font-size: 12px !important;
-        font-weight: 500 !important;
-        padding: 4px 12px !important;
         background: transparent !important;
-        color: __TEXT_SECONDARY__ !important;
+        box-shadow: none !important;
+        cursor: pointer !important;
+        position: relative !important;
+        transition: all 0.15s ease !important;
     }
     div[data-testid="stSegmentedControl"] button[aria-checked="true"],
     div[data-testid="stSegmentedControl"] button[data-checked="true"] {
-        background: __SEG_ACTIVE_BG__ !important;
-        color: __TEXT_PRIMARY__ !important;
-        font-weight: 600 !important;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.08) !important;
+        background: __THUMB_BG__ !important;
+        border-radius: 50% !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12) !important;
+        width: 26px !important;
+        height: 26px !important;
+    }
+    div[data-testid="stSegmentedControl"] button[aria-checked="false"],
+    div[data-testid="stSegmentedControl"] button[data-checked="false"] {
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+    /* Sun Icon (First Option: Light) */
+    div[data-testid="stSegmentedControl"] button:first-child::after {
+        content: "" !important;
+        display: block !important;
+        width: 15px !important;
+        height: 15px !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: contain !important;
+        background-image: url("data:image/svg+xml,%3Csvg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='5'%3E%3C/circle%3E%3Cline x1='12' y1='1' x2='12' y2='3'%3E%3C/line%3E%3Cline x1='12' y1='21' x2='12' y2='23'%3E%3C/line%3E%3Cline x1='4.22' y1='4.22' x2='5.64' y2='5.64'%3E%3C/line%3E%3Cline x1='18.36' y1='18.36' x2='19.78' y2='19.78'%3E%3C/line%3E%3Cline x1='1' y1='12' x2='3' y2='12'%3E%3C/line%3E%3Cline x1='21' y1='12' x2='23' y2='12'%3E%3C/line%3E%3Cline x1='4.22' y1='19.78' x2='5.64' y2='18.36'%3E%3C/line%3E%3Cline x1='18.36' y1='5.64' x2='19.78' y2='4.22'%3E%3C/line%3E%3C/svg%3E") !important;
+    }
+    div[data-testid="stSegmentedControl"] button:first-child[aria-checked="false"]::after {
+        background-image: url("data:image/svg+xml,%3Csvg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%238B949E' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='5'%3E%3C/circle%3E%3Cline x1='12' y1='1' x2='12' y2='3'%3E%3C/line%3E%3Cline x1='12' y1='21' x2='12' y2='23'%3E%3C/line%3E%3Cline x1='4.22' y1='4.22' x2='5.64' y2='5.64'%3E%3C/line%3E%3Cline x1='18.36' y1='18.36' x2='19.78' y2='19.78'%3E%3C/line%3E%3Cline x1='1' y1='12' x2='3' y2='12'%3E%3C/line%3E%3Cline x1='21' y1='12' x2='23' y2='12'%3E%3C/line%3E%3Cline x1='4.22' y1='19.78' x2='5.64' y2='18.36'%3E%3C/line%3E%3Cline x1='18.36' y1='5.64' x2='19.78' y2='4.22'%3E%3C/line%3E%3C/svg%3E") !important;
+    }
+    /* Moon Icon (Second Option: Dark) */
+    div[data-testid="stSegmentedControl"] button:last-child::after {
+        content: "" !important;
+        display: block !important;
+        width: 15px !important;
+        height: 15px !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: contain !important;
+        background-image: url("data:image/svg+xml,%3Csvg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'%3E%3C/path%3E%3C/svg%3E") !important;
+    }
+    div[data-testid="stSegmentedControl"] button:last-child[aria-checked="true"]::after {
+        background-image: url("data:image/svg+xml,%3Csvg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%2358A6FF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'%3E%3C/path%3E%3C/svg%3E") !important;
     }
     
     /* Metric Strip Cards (Image 2 Card Aesthetics) */
@@ -414,13 +472,13 @@ CSS_TEMPLATE = """
         color: __TEXT_SECONDARY__;
     }
     
-    /* Native Container Card (Enterprise SaaS 12-14px Rounded Cards) */
+    /* Native Container Card (High Contrast Bounding Border for Every Card) */
     div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: __BG_CARD__ !important;
         border: 1px solid __BORDER_COL__ !important;
         border-radius: 12px !important;
         padding: 20px 22px !important;
-        margin-bottom: 18px !important;
+        margin-bottom: 20px !important;
         box-shadow: __CARD_SHADOW__ !important;
         transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
     }
@@ -578,14 +636,6 @@ CSS_TEMPLATE = """
         font-weight: 600;
         color: __TEXT_PRIMARY__;
     }
-    .sidebar-link {
-        text-decoration: none;
-        color: __LINK_COLOR__;
-        font-weight: 550;
-    }
-    .sidebar-link:hover {
-        text-decoration: underline;
-    }
     .sidebar-telemetry {
         font-size: 12.5px;
         color: __TEXT_SECONDARY__;
@@ -708,7 +758,7 @@ for k, v in tokens.items():
 st.markdown(rendered_css, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 3. Sidebar (Clean & Focused on Runtime Daemon, Model & Destinations)
+# 3. Sidebar (Clean & Focused on Runtime Daemon, Model & Vector Brand Links)
 # -----------------------------------------------------------------------------
 with st.sidebar:
     st.markdown("### Runtime Daemon")
@@ -732,11 +782,23 @@ with st.sidebar:
     
     st.markdown("### Staging Destinations")
     st.markdown(
-        '<div class="sidebar-section">'
-        '<p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" class="sidebar-link">Gmail Drafts ↗</a></p>'
-        '<p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://calendar.google.com/" target="_blank" class="sidebar-link">Google Calendar ↗</a></p>'
-        '<p style="margin: 0; font-size: 13px;"><a href="https://app.todoist.com/" target="_blank" class="sidebar-link">Todoist Tasks ↗</a></p>'
-        '</div>',
+        f'<div class="sidebar-section">'
+        f'<div style="margin-bottom: 10px;">'
+        f'<a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" style="display:flex; align-items:center; gap:8px; text-decoration:none; color:{tokens["TEXT_PRIMARY"]}; font-size:13px; font-weight:500;">'
+        f'<span>{GMAIL_SVG}</span> Open Gmail Drafts ↗'
+        f'</a>'
+        f'</div>'
+        f'<div style="margin-bottom: 10px;">'
+        f'<a href="https://calendar.google.com/" target="_blank" style="display:flex; align-items:center; gap:8px; text-decoration:none; color:{tokens["TEXT_PRIMARY"]}; font-size:13px; font-weight:500;">'
+        f'<span>{CALENDAR_SVG}</span> Open Google Calendar ↗'
+        f'</a>'
+        f'</div>'
+        f'<div>'
+        f'<a href="https://app.todoist.com/" target="_blank" style="display:flex; align-items:center; gap:8px; text-decoration:none; color:{tokens["TEXT_PRIMARY"]}; font-size:13px; font-weight:500;">'
+        f'<span>{TODOIST_SVG}</span> Open Todoist App ↗'
+        f'</a>'
+        f'</div>'
+        f'</div>',
         unsafe_allow_html=True
     )
     
@@ -753,7 +815,7 @@ with st.sidebar:
     )
 
 # -----------------------------------------------------------------------------
-# 4. Top Header & Navbar (Linear / Inji Playground Enterprise Aesthetics)
+# 4. Top Header & Navbar (Inji Playground / Linear Style)
 # -----------------------------------------------------------------------------
 with st.container(key="top_navbar", border=True):
     nav_c1, nav_c2, nav_c3 = st.columns([3.8, 3.2, 3.0], vertical_alignment="center")
@@ -778,7 +840,7 @@ with st.container(key="top_navbar", border=True):
         )
 
     with nav_c3:
-        r_col1, r_col2, r_col3 = st.columns([0.9, 1.4, 1.3], vertical_alignment="center")
+        r_col1, r_col2, r_col3 = st.columns([0.8, 1.2, 1.5], vertical_alignment="center")
         with r_col1:
             st.markdown(
                 '<div style="display: flex; justify-content: flex-end; align-items: center;">'
@@ -787,10 +849,10 @@ with st.container(key="top_navbar", border=True):
                 unsafe_allow_html=True
             )
         with r_col2:
-            # Sleek Segmented Control for Light / Dark (No Emojis, No Monitor Icon)
+            # Dual-icon Sun/Moon Segmented Pill Toggle (Exact Match to Reference Image)
             theme_choice = st.segmented_control(
                 "Theme",
-                options=["Dark", "Light"],
+                options=["Light", "Dark"],
                 default=st.session_state.theme,
                 label_visibility="collapsed",
                 key="theme_toggle_seg"
@@ -1002,4 +1064,11 @@ for idx, p in enumerate(st.session_state.promises):
                     st.rerun()
                 
         if p["staged"]:
-            st.success("Staged safely: Created Gmail draft (never auto-sent), added Todoist task, and blocked tentative calendar time. [View Draft in Gmail ↗](https://mail.google.com/mail/u/0/#drafts)")
+            st.markdown(
+                f'<div style="margin-top:14px; padding:10px 14px; background:{tokens["BADGE_STAGED_BG"]}; border:1px solid {tokens["BADGE_STAGED_BORDER"]}; border-radius:8px; font-size:13px; color:{tokens["BADGE_STAGED_TEXT"]}; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">'
+                f'<div><strong>Staged safely:</strong> Created Gmail draft (never auto-sent), added Todoist task, and blocked tentative calendar time.</div>'
+                f'<a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" style="display:inline-flex; align-items:center; gap:6px; text-decoration:none; color:{tokens["LINK_COLOR"]}; font-weight:600;">'
+                f'{GMAIL_SVG} View Draft in Gmail ↗</a>'
+                f'</div>',
+                unsafe_allow_html=True
+            )
