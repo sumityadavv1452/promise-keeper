@@ -95,9 +95,6 @@ if current_theme == "Dark":
         "TOGGLE_BORDER": "#30363D",
         "TOGGLE_HOVER_BG": "#30363D",
         "TOGGLE_HOVER_COLOR": "#FFFFFF",
-        "TOGGLE_PILL_BG": "#21262D",
-        "TOGGLE_PILL_BORDER": "#30363D",
-        "THUMB_BG": "#30363D",
         "BADGE_OUTGOING_BG": "rgba(30, 58, 138, 0.2)",
         "BADGE_OUTGOING_TEXT": "#60A5FA",
         "BADGE_OUTGOING_BORDER": "#1E40AF",
@@ -145,9 +142,6 @@ else:
         "TOGGLE_BORDER": "#CBD5E1",
         "TOGGLE_HOVER_BG": "#E2E8F0",
         "TOGGLE_HOVER_COLOR": "#0F172A",
-        "TOGGLE_PILL_BG": "#F1F4F9",
-        "TOGGLE_PILL_BORDER": "#E5E7EB",
-        "THUMB_BG": "#FFFFFF",
         "BADGE_OUTGOING_BG": "#EFF6FF",
         "BADGE_OUTGOING_TEXT": "#1D4ED8",
         "BADGE_OUTGOING_BORDER": "#DBEAFE",
@@ -363,80 +357,18 @@ CSS_TEMPLATE = """
         display: inline-block;
     }
     
-    /* Exact Dual-Icon Sun/Moon Segmented Pill Toggle */
-    div[data-testid="stSegmentedControl"] {
-        height: 32px !important;
-        background: __TOGGLE_PILL_BG__ !important;
-        border-radius: 9999px !important;
-        padding: 2px 4px !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        border: 1px solid __TOGGLE_PILL_BORDER__ !important;
-        width: auto !important;
-    }
-    div[data-testid="stSegmentedControl"] button p,
-    div[data-testid="stSegmentedControl"] button span {
-        display: none !important;
-        visibility: hidden !important;
-    }
-    div[data-testid="stSegmentedControl"] button {
-        width: 26px !important;
-        height: 26px !important;
-        min-width: 26px !important;
-        min-height: 26px !important;
-        border-radius: 50% !important;
-        padding: 0 !important;
+    /* Theme Toggle Switch Styling */
+    div[data-testid="stToggle"] {
         margin: 0 !important;
+        padding: 0 !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        border: none !important;
-        background: transparent !important;
-        box-shadow: none !important;
+    }
+    div[data-testid="stToggle"] label {
+        margin: 0 !important;
+        padding: 0 !important;
         cursor: pointer !important;
-        position: relative !important;
-        transition: all 0.15s ease !important;
-    }
-    div[data-testid="stSegmentedControl"] button[aria-checked="true"],
-    div[data-testid="stSegmentedControl"] button[data-checked="true"] {
-        background: __THUMB_BG__ !important;
-        border-radius: 50% !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12) !important;
-        width: 26px !important;
-        height: 26px !important;
-    }
-    div[data-testid="stSegmentedControl"] button[aria-checked="false"],
-    div[data-testid="stSegmentedControl"] button[data-checked="false"] {
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-    /* Sun Icon (First Option: Light) */
-    div[data-testid="stSegmentedControl"] button:first-child::after {
-        content: "" !important;
-        display: block !important;
-        width: 15px !important;
-        height: 15px !important;
-        background-repeat: no-repeat !important;
-        background-position: center !important;
-        background-size: contain !important;
-        background-image: url("data:image/svg+xml,%3Csvg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='5'%3E%3C/circle%3E%3Cline x1='12' y1='1' x2='12' y2='3'%3E%3C/line%3E%3Cline x1='12' y1='21' x2='12' y2='23'%3E%3C/line%3E%3Cline x1='4.22' y1='4.22' x2='5.64' y2='5.64'%3E%3C/line%3E%3Cline x1='18.36' y1='18.36' x2='19.78' y2='19.78'%3E%3C/line%3E%3Cline x1='1' y1='12' x2='3' y2='12'%3E%3C/line%3E%3Cline x1='21' y1='12' x2='23' y2='12'%3E%3C/line%3E%3Cline x1='4.22' y1='19.78' x2='5.64' y2='18.36'%3E%3C/line%3E%3Cline x1='18.36' y1='5.64' x2='19.78' y2='4.22'%3E%3C/line%3E%3C/svg%3E") !important;
-    }
-    div[data-testid="stSegmentedControl"] button:first-child[aria-checked="false"]::after {
-        background-image: url("data:image/svg+xml,%3Csvg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%238B949E' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='5'%3E%3C/circle%3E%3Cline x1='12' y1='1' x2='12' y2='3'%3E%3C/line%3E%3Cline x1='12' y1='21' x2='12' y2='23'%3E%3C/line%3E%3Cline x1='4.22' y1='4.22' x2='5.64' y2='5.64'%3E%3C/line%3E%3Cline x1='18.36' y1='18.36' x2='19.78' y2='19.78'%3E%3C/line%3E%3Cline x1='1' y1='12' x2='3' y2='12'%3E%3C/line%3E%3Cline x1='21' y1='12' x2='23' y2='12'%3E%3C/line%3E%3Cline x1='4.22' y1='19.78' x2='5.64' y2='18.36'%3E%3C/line%3E%3Cline x1='18.36' y1='5.64' x2='19.78' y2='4.22'%3E%3C/line%3E%3C/svg%3E") !important;
-    }
-    /* Moon Icon (Second Option: Dark) */
-    div[data-testid="stSegmentedControl"] button:last-child::after {
-        content: "" !important;
-        display: block !important;
-        width: 15px !important;
-        height: 15px !important;
-        background-repeat: no-repeat !important;
-        background-position: center !important;
-        background-size: contain !important;
-        background-image: url("data:image/svg+xml,%3Csvg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'%3E%3C/path%3E%3C/svg%3E") !important;
-    }
-    div[data-testid="stSegmentedControl"] button:last-child[aria-checked="true"]::after {
-        background-image: url("data:image/svg+xml,%3Csvg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%2358A6FF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'%3E%3C/path%3E%3C/svg%3E") !important;
     }
     
     /* Metric Strip Cards (Image 2 Card Aesthetics) */
@@ -840,7 +772,7 @@ with st.container(key="top_navbar", border=True):
         )
 
     with nav_c3:
-        r_col1, r_col2, r_col3 = st.columns([0.8, 1.2, 1.5], vertical_alignment="center")
+        r_col1, r_col2, r_col3 = st.columns([0.8, 1.2, 1.4], vertical_alignment="center")
         with r_col1:
             st.markdown(
                 '<div style="display: flex; justify-content: flex-end; align-items: center;">'
@@ -849,17 +781,26 @@ with st.container(key="top_navbar", border=True):
                 unsafe_allow_html=True
             )
         with r_col2:
-            # Dual-icon Sun/Moon Segmented Pill Toggle (Exact Match to Reference Image)
-            theme_choice = st.segmented_control(
-                "Theme",
-                options=["Light", "Dark"],
-                default=st.session_state.theme,
-                label_visibility="collapsed",
-                key="theme_toggle_seg"
-            )
-            if theme_choice and theme_choice != st.session_state.theme:
-                st.session_state.theme = theme_choice
-                st.rerun()
+            # Clean, unbreakable dual-icon toggle pill: ☀️ [ switch ] 🌙
+            t_c1, t_c2, t_c3 = st.columns([0.25, 0.5, 0.25], vertical_alignment="center")
+            with t_c1:
+                sun_opacity = "1" if st.session_state.theme == "Light" else "0.3"
+                st.markdown(f'<div style="text-align:right; font-size:13px; opacity:{sun_opacity}; line-height:1; user-select:none;">☀️</div>', unsafe_allow_html=True)
+            with t_c2:
+                is_dark = st.toggle(
+                    "🌙",
+                    value=(st.session_state.theme == "Dark"),
+                    key="theme_toggle_switch",
+                    label_visibility="collapsed",
+                    help="Switch between Light and Dark mode"
+                )
+                new_theme = "Dark" if is_dark else "Light"
+                if new_theme != st.session_state.theme:
+                    st.session_state.theme = new_theme
+                    st.rerun()
+            with t_c3:
+                moon_opacity = "1" if st.session_state.theme == "Dark" else "0.3"
+                st.markdown(f'<div style="text-align:left; font-size:13px; opacity:{moon_opacity}; line-height:1; user-select:none;">🌙</div>', unsafe_allow_html=True)
         with r_col3:
             if st.button("Sync Stream", key="nav_sync_btn", type="primary", use_container_width=True):
                 with st.spinner("Syncing Bee Wearable speech..."):
