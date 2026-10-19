@@ -7,7 +7,7 @@ from src.action_router import ActionRouter
 from src.telemetry import TelemetryRecorder
 
 # -----------------------------------------------------------------------------
-# 1. Page Configuration & Antigravity Design System Injection
+# 1. Page Configuration & Unified Dark Engineering Canvas
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="Promise Keeper — Wearable AI Commitment Engine",
@@ -16,19 +16,25 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom Antigravity CSS: clean slate, crisp contrast, hairline borders, no floating text
+# Custom Unified Dark CSS (Linear / Vercel / Antigravity Dark Aesthetics)
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;650&family=JetBrains+Mono:wght@400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;650&family=JetBrains+Mono:wght@400;500;600&display=swap');
     
+    /* Base Reset */
     html, body, [class*="css"] {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        color: #121317;
-        background-color: #FAFAFC;
+        color: #F0F6FC !important;
+        background-color: #0D1117 !important;
+    }
+    
+    .stApp {
+        background-color: #0D1117 !important;
+        color: #F0F6FC !important;
     }
     
     /* Hide generic Streamlit UI chrome */
-    header, #MainMenu, footer { visibility: hidden; }
+    header, #MainMenu, footer { visibility: hidden !important; }
     div[data-testid="stDecoration"] { display: none !important; }
     div[data-testid="stToolbar"] { display: none !important; }
     div[data-testid="stStatusWidget"] { display: none !important; }
@@ -41,35 +47,34 @@ st.markdown("""
         align-items: center;
         justify-content: space-between;
         padding: 20px 24px;
-        background: #FFFFFF;
-        border: 1px solid #E6EAF0;
+        background: #161B22;
+        border: 1px solid #30363D;
         border-radius: 16px;
         margin-bottom: 24px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
     }
     .brand-title {
         font-size: 20px;
         font-weight: 650;
         letter-spacing: -0.02em;
-        color: #121317;
+        color: #F0F6FC;
         margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        line-height: 1.2;
     }
     .version-pill {
         font-family: 'JetBrains Mono', monospace;
         font-size: 11px;
         font-weight: 500;
-        background: #F1F4F9;
-        color: #45474D;
+        background: #21262D;
+        border: 1px solid #30363D;
+        color: #8B949E;
         padding: 3px 8px;
         border-radius: 9999px;
     }
     .brand-tagline {
-        font-size: 13.5px;
+        font-size: 14px;
         font-weight: 450;
-        color: #5F6368;
+        color: #8B949E;
         margin: 4px 0 0 0;
         letter-spacing: -0.01em;
     }
@@ -77,183 +82,203 @@ st.markdown("""
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 5px 12px;
-        background: #F8F9FC;
-        border: 1px solid #E6EAF0;
+        padding: 6px 14px;
+        background: #21262D;
+        border: 1px solid #30363D;
         border-radius: 9999px;
         font-size: 12px;
         font-weight: 500;
-        color: #212226;
+        color: #C9D1D9;
     }
     .green-dot {
         width: 7px;
         height: 7px;
-        background: #188038;
+        background: #3FB950;
         border-radius: 50%;
+        display: inline-block;
     }
     
-    /* High-Density Metric Strip */
+    /* High-Density Metric Strip Cards */
     .metric-card {
-        background: #FFFFFF;
-        border: 1px solid #E6EAF0;
+        background: #161B22;
+        border: 1px solid #30363D;
         border-radius: 14px;
         padding: 16px 20px;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     }
     .metric-label {
-        font-size: 12px;
-        font-weight: 500;
-        color: #5F6368;
+        font-size: 11px;
+        font-weight: 600;
+        color: #8B949E;
         margin-bottom: 6px;
         text-transform: uppercase;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.05em;
     }
     .metric-val {
         font-family: 'JetBrains Mono', monospace;
         font-size: 22px;
         font-weight: 600;
-        color: #121317;
+        color: #F0F6FC;
         margin-bottom: 4px;
     }
     .metric-sub {
         font-size: 12px;
-        color: #80868B;
+        color: #8B949E;
     }
     
-    /* Commitment Container Card */
-    .commitment-card {
-        background: #FFFFFF;
-        border: 1px solid #E6EAF0;
-        border-radius: 16px;
-        padding: 24px;
-        margin-bottom: 20px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    /* Native Bordered Container as Clean Dark Card */
+    div[data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: #161B22 !important;
+        border: 1px solid #30363D !important;
+        border-radius: 16px !important;
+        padding: 22px !important;
+        margin-bottom: 20px !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25) !important;
     }
-    .chip-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 12px;
-    }
+    
+    /* Direction and Status Chips */
     .badge-primary {
-        background: #E8F0FE;
-        color: #1A73E8;
+        background: rgba(31, 111, 235, 0.15);
+        border: 1px solid rgba(56, 139, 253, 0.4);
+        color: #58A6FF;
         font-size: 12px;
         font-weight: 500;
-        padding: 4px 10px;
+        padding: 3px 10px;
         border-radius: 9999px;
     }
     .badge-secondary {
-        background: #FEF7E0;
-        color: #B06000;
+        background: rgba(210, 153, 34, 0.15);
+        border: 1px solid rgba(210, 153, 34, 0.4);
+        color: #D29922;
         font-size: 12px;
         font-weight: 500;
-        padding: 4px 10px;
+        padding: 3px 10px;
         border-radius: 9999px;
     }
     .badge-status {
-        background: #F1F3F4;
-        color: #3C4043;
+        background: #21262D;
+        border: 1px solid #30363D;
+        color: #8B949E;
         font-size: 12px;
         font-weight: 500;
-        padding: 4px 10px;
+        padding: 3px 10px;
         border-radius: 9999px;
     }
-    .card-title {
-        font-size: 17px;
+    .badge-status-staged {
+        background: rgba(35, 134, 54, 0.2);
+        border: 1px solid #238636;
+        color: #3FB950;
+        font-size: 12px;
         font-weight: 600;
-        color: #121317;
-        margin: 0 0 6px 0;
-    }
-    .card-summary {
-        font-size: 14px;
-        color: #45474D;
-        margin-bottom: 12px;
-        line-height: 1.45;
-    }
-    .meta-row {
-        display: flex;
-        gap: 16px;
-        font-size: 12.5px;
-        color: #5F6368;
-        margin-bottom: 16px;
-        font-family: 'JetBrains Mono', monospace;
+        padding: 3px 10px;
+        border-radius: 9999px;
     }
     
     /* Sidebar Styles with High Contrast */
     section[data-testid="stSidebar"] {
-        background-color: #FFFFFF !important;
-        border-right: 1px solid #E6EAF0 !important;
-        color: #212226 !important;
+        background-color: #0D1117 !important;
+        border-right: 1px solid #30363D !important;
+        color: #C9D1D9 !important;
+    }
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3 {
+        color: #F0F6FC !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        margin-bottom: 10px !important;
     }
     .sidebar-section {
-        background: #FFFFFF;
-        border: 1px solid #E6EAF0;
-        border-radius: 12px;
-        padding: 16px;
-        margin-bottom: 16px;
+        background: #161B22 !important;
+        border: 1px solid #30363D !important;
+        border-radius: 12px !important;
+        padding: 16px !important;
+        margin-bottom: 16px !important;
     }
     .sidebar-row {
         display: flex;
         justify-content: space-between;
         font-size: 13px;
-        color: #212226;
+        color: #8B949E;
         padding: 6px 0;
-        border-bottom: 1px solid #F1F3F4;
+        border-bottom: 1px solid #21262D;
     }
     .sidebar-row:last-child { border-bottom: none; }
     .sidebar-val {
         font-family: 'JetBrains Mono', monospace;
         font-weight: 500;
-        color: #121317;
+        color: #F0F6FC;
     }
 
-    /* Tabs Styling: High Contrast Antigravity Labels */
+    /* Tabs: Dark High-Contrast Labels */
     div[data-testid="stTabs"] button[role="tab"] {
-        color: #3C4043 !important;
+        color: #8B949E !important;
         font-size: 13.5px !important;
         font-weight: 500 !important;
         padding: 8px 16px !important;
         border-bottom: 2px solid transparent !important;
     }
     div[data-testid="stTabs"] button[role="tab"] p,
+    div[data-testid="stTabs"] button[data-baseweb="tab"] p,
     div[data-testid="stTabs"] button span {
-        color: #3C4043 !important;
+        color: #8B949E !important;
         font-size: 13.5px !important;
         font-weight: 500 !important;
         margin: 0 !important;
     }
     div[data-testid="stTabs"] button[aria-selected="true"] {
-        color: #121317 !important;
-        font-weight: 600 !important;
-        border-bottom: 2px solid #121317 !important;
+        border-bottom: 2px solid #58A6FF !important;
     }
     div[data-testid="stTabs"] button[aria-selected="true"] p,
     div[data-testid="stTabs"] button[aria-selected="true"] span {
-        color: #121317 !important;
+        color: #F0F6FC !important;
         font-weight: 600 !important;
     }
 
-    /* Hairline Form Controls */
+    /* Dark Form Controls */
     input[type="text"], input[type="number"], textarea, .stSelectbox div[data-baseweb="select"] {
-        background-color: #FFFFFF !important;
-        border: 1px solid #E6EAF0 !important;
+        background-color: #0D1117 !important;
+        border: 1px solid #30363D !important;
         border-radius: 8px !important;
-        color: #121317 !important;
+        color: #F0F6FC !important;
         font-size: 13.5px !important;
     }
     input[type="text"]:focus, textarea:focus {
-        border-color: #1A73E8 !important;
-        box-shadow: 0 0 0 1px #1A73E8 !important;
+        border-color: #58A6FF !important;
+        box-shadow: 0 0 0 1px #58A6FF !important;
     }
     
-    /* Pill Action Buttons */
-    .stButton > button {
+    /* Buttons */
+    button[kind="primary"], .stButton > button[kind="primary"] {
+        background-color: #238636 !important;
+        color: #FFFFFF !important;
+        border: 1px solid rgba(240, 246, 252, 0.1) !important;
+        border-radius: 9999px !important;
+        font-weight: 600 !important;
+        font-size: 13.5px !important;
+        letter-spacing: -0.01em !important;
+        transition: all 0.15s ease !important;
+    }
+    button[kind="primary"]:hover {
+        background-color: #2EA043 !important;
+    }
+    
+    button[kind="secondary"], .stButton > button[kind="secondary"], .stButton > button {
+        background-color: #21262D !important;
+        color: #C9D1D9 !important;
+        border: 1px solid #30363D !important;
         border-radius: 9999px !important;
         font-weight: 500 !important;
         font-size: 13.5px !important;
         letter-spacing: -0.01em !important;
         transition: all 0.15s ease !important;
+    }
+    button[kind="secondary"]:hover, .stButton > button:hover {
+        background-color: #30363D !important;
+        border-color: #8B949E !important;
+        color: #F0F6FC !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -311,7 +336,7 @@ with st.sidebar:
     st.markdown("### Runtime Daemon")
     st.markdown("""
     <div class="sidebar-section">
-        <div class="sidebar-row"><span>Daemon Status</span><span class="sidebar-val" style="color: #188038;">● Active</span></div>
+        <div class="sidebar-row"><span>Daemon Status</span><span class="sidebar-val" style="color: #3FB950;">● Active</span></div>
         <div class="sidebar-row"><span>Daemon Port</span><span class="sidebar-val">4242</span></div>
         <div class="sidebar-row"><span>Hardware Node</span><span class="sidebar-val">Pendant 0x91B2</span></div>
         <div class="sidebar-row"><span>Battery Level</span><span class="sidebar-val">92%</span></div>
@@ -329,14 +354,20 @@ with st.sidebar:
     st.markdown("### Staging Destinations")
     st.markdown("""
     <div class="sidebar-section">
-        <p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" style="text-decoration: none; color: #1A73E8; font-weight: 500;">✉️ Open Gmail Drafts ↗</a></p>
-        <p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://calendar.google.com/" target="_blank" style="text-decoration: none; color: #1A73E8; font-weight: 500;">📅 Open Google Calendar ↗</a></p>
-        <p style="margin: 0; font-size: 13px;"><a href="https://app.todoist.com/" target="_blank" style="text-decoration: none; color: #1A73E8; font-weight: 500;">📝 Open Todoist App ↗</a></p>
+        <p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" style="text-decoration: none; color: #58A6FF; font-weight: 500;">✉️ Open Gmail Drafts ↗</a></p>
+        <p style="margin: 0 0 8px 0; font-size: 13px;"><a href="https://calendar.google.com/" target="_blank" style="text-decoration: none; color: #58A6FF; font-weight: 500;">📅 Open Google Calendar ↗</a></p>
+        <p style="margin: 0; font-size: 13px;"><a href="https://app.todoist.com/" target="_blank" style="text-decoration: none; color: #58A6FF; font-weight: 500;">📝 Open Todoist App ↗</a></p>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("### Telemetry Session")
-    st.caption("AWS Bedrock Converse API Latency: 284ms | Cost: $0.0009")
+    st.markdown(f"""
+    <div style="font-size: 12.5px; color: #8B949E; line-height: 1.8;">
+        <div>Converse API Latency: <strong style="color: #F0F6FC;">{st.session_state.latency_ms} ms</strong></div>
+        <div>Tokens Consumed: <strong style="color: #F0F6FC;">{st.session_state.tokens_used:,}</strong></div>
+        <div>Estimated Cost: <strong style="color: #F0F6FC;">$0.0009 USD</strong></div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
 # 4. Top Hero Section with Tagline
@@ -345,7 +376,7 @@ st.markdown("""
 <div class="hero-container">
     <div>
         <div style="display: flex; align-items: center; gap: 10px;">
-            <h1 class="brand-title">✦ Promise Keeper</h1>
+            <span class="brand-title">✦ Promise Keeper</span>
             <span class="version-pill">Bee v1.4.2 · Bedrock Nova Pro</span>
         </div>
         <p class="brand-tagline">“You said it. We’ll remember it.”</p>
@@ -446,19 +477,18 @@ with c_right:
 # -----------------------------------------------------------------------------
 with st.expander("🎙️ Bee Ambient Transcript Stream (Click to inspect recorded turns)", expanded=False):
     st.markdown("""
-    ```text
-    [09:41:04] Device: Bee Pendant 0x91B2 · Diarization Engine Active · Audio Stream 16kHz
-    [09:41:12] Speaker 1 (Me): "Hey Alex, thanks for the sync. I'll send you the revised pitch deck by 5 PM tomorrow with the updated architecture diagram."
-    [09:41:20] Speaker 2 (Alex): "Sounds great. Make sure to review the Q3 analytics report before Wednesday noon so we're aligned for the client sync."
-    [09:41:28] Speaker 1 (Me): "Will do, let's also block 30 minutes on Thursday morning for a dry run."
-    ```
-    """)
+    <div style="background: #090D13; border: 1px solid #30363D; border-radius: 8px; padding: 14px 18px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #C9D1D9; line-height: 1.6;">
+        <div>[09:41:04] Device: Bee Pendant 0x91B2 · Diarization Engine Active · Audio Stream 16kHz</div>
+        <div>[09:41:12] Speaker 1 (Me): "Hey Alex, thanks for the sync. I'll send you the revised pitch deck by 5 PM tomorrow with the updated architecture diagram."</div>
+        <div>[09:41:20] Speaker 2 (Alex): "Sounds great. Make sure to review the Q3 analytics report before Wednesday noon so we're aligned for the client sync."</div>
+        <div>[09:41:28] Speaker 1 (Me): "Will do, let's also block 30 minutes on Thursday morning for a dry run."</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-st.write("")
-st.subheader("Commitments Pending Review")
+st.markdown("<h2 style='font-size: 18px; font-weight: 600; color: #F0F6FC; margin: 24px 0 16px 0;'>Commitments Pending Review</h2>", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 8. Render Each Commitment inside a Solid Container Card
+# 8. Render Each Commitment inside a Solid Container Card (Zero empty white bars)
 # -----------------------------------------------------------------------------
 router = ActionRouter()
 
@@ -466,82 +496,81 @@ for idx, p in enumerate(st.session_state.promises):
     is_me = p["direction"] == "MADE_BY_ME"
     badge_class = "badge-primary" if is_me else "badge-secondary"
     badge_label = "📤 Promise Made by Me" if is_me else "📥 Commitment to Me"
+    status_class = "badge-status-staged" if p["staged"] else "badge-status"
     status_label = "✅ STAGED SAFELY" if p["staged"] else "Pending Review"
     
-    st.markdown('<div class="commitment-card">', unsafe_allow_html=True)
-    
-    # Header row inside card
-    st.markdown(f"""
-    <div class="chip-row">
-        <div>
-            <span class="{badge_class}">{badge_label}</span>
-            <span class="badge-status" style="margin-left: 8px;">{status_label}</span>
+    # Use native Streamlit container with border for 100% clean dark styling
+    with st.container(border=True):
+        # Header row inside card
+        st.markdown(f"""
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <div>
+                <span class="{badge_class}">{badge_label}</span>
+                <span class="{status_class}" style="margin-left: 8px;">{status_label}</span>
+            </div>
+            <div style="font-size: 13px; font-weight: 500; color: #8B949E;">
+                ⏱️ Due: <strong style="color: #F0F6FC;">{p['verbal_deadline']}</strong>
+            </div>
         </div>
-        <div style="font-size: 13px; font-weight: 500; color: #5F6368;">
-            ⏱️ Due: <b>{p['verbal_deadline']}</b>
-        </div>
-    </div>
-    <div class="card-title">{p['task_title']}</div>
-    <div class="card-summary">{p['summary']}</div>
-    <div class="meta-row">
-        <span>Counterparty: <b>{p['counterparty_name']}</b></span>
-        <span>Email: <b>{p['counterparty_email']}</b></span>
-        <span>ISO: <code>{p['iso_deadline']}</code></span>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Properly rendered 3-tab review panel with full visible labels
-    tab_todo, tab_email, tab_cal = st.tabs(["📝 Todoist Task", "✉️ Gmail Draft", "📅 Calendar Block"])
-    
-    with tab_todo:
-        t_col1, t_col2 = st.columns([3, 1])
-        with t_col1:
-            p["task_title"] = st.text_input("Task Title", value=p["task_title"], key=f"t_{idx}")
-        with t_col2:
-            p["priority"] = st.selectbox("Priority Level", ["P1 - High", "P2 - Medium", "P3 - Low"], index=0 if "P1" in p["priority"] else 1, key=f"p_{idx}")
-            
-    with tab_email:
-        e_col1, e_col2 = st.columns([1, 2])
-        with e_col1:
-            p["counterparty_email"] = st.text_input("Recipient", value=p["counterparty_email"], key=f"to_{idx}")
-        with e_col2:
-            p["email_subject"] = st.text_input("Subject", value=p["email_subject"], key=f"sub_{idx}")
-        p["email_body"] = st.text_area("Draft Body (Users.drafts.create - Never Auto-Sent)", value=p["email_body"], height=130, key=f"body_{idx}")
-        
-    with tab_cal:
-        c_col1, c_col2 = st.columns([3, 1])
-        with c_col1:
-            p["calendar_title"] = st.text_input("Event Name", value=p["calendar_title"], key=f"cal_{idx}")
-        with c_col2:
-            p["calendar_duration"] = st.number_input("Duration (min)", value=p["calendar_duration"], step=15, key=f"dur_{idx}")
-        st.caption("ℹ️ Staged status will be marked as 'tentative' to avoid overwriting existing schedules.")
-    
-    st.write("")
-    
-    # Action Footer
-    b_col1, b_col2, _ = st.columns([2, 1, 4])
-    with b_col1:
-        btn_label = "✓ Commitment Staged" if p["staged"] else "✅ Approve & Stage Action"
-        if st.button(btn_label, key=f"approve_{idx}", disabled=p["staged"], use_container_width=True):
-            p["staged"] = True
-            router.stage_todoist(p["task_title"], p["verbal_deadline"])
-            router.stage_gmail_draft(p["counterparty_email"], p["email_subject"], p["email_body"])
-            router.stage_calendar_event(p["calendar_title"], p["iso_deadline"], p["calendar_duration"])
-            st.session_state.staged_count += 1
-            st.toast(f"Staged commitment #{idx+1} to Gmail, Todoist, and Calendar!", icon="✅")
-            st.rerun()
-            
-    with b_col2:
-        if st.button("Dismiss", key=f"dismiss_{idx}", use_container_width=True):
-            st.session_state.promises.pop(idx)
-            st.rerun()
-            
-    if p["staged"]:
-        st.markdown("""
-        <div style="margin-top: 12px; padding: 10px 14px; background: #E6F4EA; border-radius: 8px; font-size: 13px; color: #137333;">
-            ✓ <b>Staged safely:</b> Created Gmail draft (never auto-sent), added Todoist task, and blocked tentative calendar time.
-            <a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" style="margin-left: 8px; color: #137333; font-weight: 600;">View Draft ↗</a>
+        <div style="font-size: 17px; font-weight: 600; color: #F0F6FC; margin: 0 0 6px 0;">{p['task_title']}</div>
+        <div style="font-size: 14px; color: #C9D1D9; margin-bottom: 12px; line-height: 1.45;">{p['summary']}</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 12.5px; color: #8B949E; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace;">
+            <span>Counterparty: <strong style="color: #F0F6FC;">{p['counterparty_name']}</strong></span>
+            <span>Email: <code style="color: #58A6FF;">{p['counterparty_email']}</code></span>
+            <span>ISO: <code style="color: #8B949E;">{p['iso_deadline']}</code></span>
         </div>
         """, unsafe_allow_html=True)
         
-    st.markdown('</div>', unsafe_allow_html=True)
+        # Properly rendered 3-tab review panel with full visible labels
+        tab_todo, tab_email, tab_cal = st.tabs(["📝 Todoist Task", "✉️ Gmail Draft", "📅 Calendar Block"])
+        
+        with tab_todo:
+            t_col1, t_col2 = st.columns([3, 1])
+            with t_col1:
+                p["task_title"] = st.text_input("Task Title", value=p["task_title"], key=f"t_{idx}")
+            with t_col2:
+                p["priority"] = st.selectbox("Priority Level", ["P1 - High", "P2 - Medium", "P3 - Low"], index=0 if "P1" in p["priority"] else 1, key=f"p_{idx}")
+                
+        with tab_email:
+            e_col1, e_col2 = st.columns([1, 2])
+            with e_col1:
+                p["counterparty_email"] = st.text_input("Recipient", value=p["counterparty_email"], key=f"to_{idx}")
+            with e_col2:
+                p["email_subject"] = st.text_input("Subject", value=p["email_subject"], key=f"sub_{idx}")
+            p["email_body"] = st.text_area("Draft Body (Users.drafts.create - Never Auto-Sent)", value=p["email_body"], height=130, key=f"body_{idx}")
+            
+        with tab_cal:
+            c_col1, c_col2 = st.columns([3, 1])
+            with c_col1:
+                p["calendar_title"] = st.text_input("Event Name", value=p["calendar_title"], key=f"cal_{idx}")
+            with c_col2:
+                p["calendar_duration"] = st.number_input("Duration (min)", value=p["calendar_duration"], step=15, key=f"dur_{idx}")
+            st.caption("ℹ️ Staged status will be marked as 'tentative' to avoid overwriting existing schedules.")
+        
+        st.write("")
+        
+        # Action Footer
+        b_col1, b_col2, _ = st.columns([2, 1, 4])
+        with b_col1:
+            btn_label = "✓ Commitment Staged" if p["staged"] else "✅ Approve & Stage Action"
+            if st.button(btn_label, key=f"approve_{idx}", disabled=p["staged"], type="primary", use_container_width=True):
+                p["staged"] = True
+                router.stage_todoist(p["task_title"], p["verbal_deadline"])
+                router.stage_gmail_draft(p["counterparty_email"], p["email_subject"], p["email_body"])
+                router.stage_calendar_event(p["calendar_title"], p["iso_deadline"], p["calendar_duration"])
+                st.session_state.staged_count += 1
+                st.toast(f"Staged commitment #{idx+1} to Gmail, Todoist, and Calendar!", icon="✅")
+                st.rerun()
+                
+        with b_col2:
+            if st.button("Dismiss", key=f"dismiss_{idx}", type="secondary", use_container_width=True):
+                st.session_state.promises.pop(idx)
+                st.rerun()
+                
+        if p["staged"]:
+            st.markdown("""
+            <div style="margin-top: 14px; padding: 10px 14px; background: rgba(35, 134, 54, 0.15); border: 1px solid rgba(46, 160, 67, 0.4); border-radius: 8px; font-size: 13px; color: #3FB950;">
+                ✓ <b>Staged safely:</b> Created Gmail draft (never auto-sent), added Todoist task, and blocked tentative calendar time.
+                <a href="https://mail.google.com/mail/u/0/#drafts" target="_blank" style="margin-left: 8px; color: #58A6FF; text-decoration: none; font-weight: 600;">View Draft in Gmail ↗</a>
+            </div>
+            """, unsafe_allow_html=True)
