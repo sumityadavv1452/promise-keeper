@@ -332,10 +332,25 @@ div[data-testid="stTabs"] button[role="tab"] {
     letter-spacing: -0.01em !important;
 }
 
+div[data-testid="stTabs"] button[role="tab"] p,
+div[data-testid="stTabs"] button[data-baseweb="tab"] p,
+div[data-testid="stTabs"] button span {
+    color: #3C4043 !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+}
+
 div[data-testid="stTabs"] button[aria-selected="true"] {
     color: #121317 !important;
     font-weight: 600 !important;
     border-bottom: 2px solid #121317 !important;
+}
+
+div[data-testid="stTabs"] button[aria-selected="true"] p,
+div[data-testid="stTabs"] button[aria-selected="true"] span {
+    color: #121317 !important;
+    font-weight: 600 !important;
 }
 
 /* 10. Monospace Drawer */
@@ -702,9 +717,9 @@ else:
             )
 
             # 3 Clean Native Tabs inside the card (Todoist Task, Gmail Draft, Calendar Block)
-            tab_task, tab_email, tab_cal = st.tabs(["📝 Todoist Task", "✉️ Gmail Draft", "📅 Calendar Block"])
+            tab_todo, tab_email, tab_cal = st.tabs(["📝 Todoist Task", "✉️ Gmail Draft", "📅 Calendar Block"])
 
-            with tab_task:
+            with tab_todo:
                 c_t1, c_t2 = st.columns([3, 1])
                 with c_t1:
                     new_title = st.text_input(
@@ -743,10 +758,10 @@ else:
                     promise.email_draft.subject = new_subj
 
                 new_body = st.text_area(
-                    "Generated Gmail Draft (Subject & Body Preview)",
+                    "Email Body",
                     value=promise.email_draft.body,
-                    rows=3,
-                    key=f"body_{promise.id}_{idx}",
+                    height=140,
+                    key=f"email_body_{promise.id}_{idx}",
                     disabled=is_staged,
                 )
                 promise.email_draft.body = new_body
@@ -780,7 +795,7 @@ else:
 
             with act_col1:
                 if not is_staged:
-                    if st.button("✅ Approve & Stage Action", key=f"btn_stage_{promise.id}_{idx}", type="primary"):
+                    if st.button("✅ Approve & Stage Action", key=f"approve_{promise.id}_{idx}", type="primary"):
                         router = st.session_state.action_router
                         router.stage_todoist(promise.task_title, due_date=promise.verbal_deadline, priority=prio)
                         router.stage_calendar_event(
