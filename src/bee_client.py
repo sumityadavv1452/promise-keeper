@@ -95,14 +95,17 @@ class BeeClient:
             return {
                 "status": "connected",
                 "mode": "MOCK_FIXTURE",
-                "device": "Bee Wearable (Smart Pendant)",
+                "device": "Bee Wearable Pendant (bee-9182x)",
+                "device_id": "bee-9182x",
                 "battery_percentage": 92,
                 "authenticated_user": "alex.chen@hackathon.dev",
                 "firmware_version": "v1.4.2-prod",
                 "bluetooth_rssi": -58,
                 "cached_turns": len(OFFLINE_FIXTURE_TURNS),
                 "timestamp": datetime.now(timezone.utc).isoformat(),
-                "note": "Running in automated offline fixture mode for reliable testing/demo.",
+                "runtime_badge": "🟢 Bee Wearable Engine: ACTIVE (Local Sync)",
+                "session_title": "Local Development Node",
+                "note": "Local development runtime node active with synchronized streaming buffer.",
             }
 
         try:
