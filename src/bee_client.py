@@ -98,7 +98,7 @@ class BeeClient:
                 "device": "Bee Wearable Pendant (bee-9182x)",
                 "device_id": "bee-9182x",
                 "battery_percentage": 92,
-                "authenticated_user": "alex.chen@hackathon.dev",
+                "authenticated_user": "alex.rivera@hackathon.dev",
                 "firmware_version": "v1.4.2-prod",
                 "bluetooth_rssi": -58,
                 "cached_turns": len(OFFLINE_FIXTURE_TURNS),

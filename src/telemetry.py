@@ -57,12 +57,13 @@ class TelemetryRecord(BaseModel):
     )
     model_id: str
     latency_ms: float
-    input_tokens: int
-    output_tokens: int
-    total_tokens: int
-    estimated_cost_usd: float
+    input_tokens: int = 0
+    output_tokens: int = 0
+    total_tokens: int = 0
+    estimated_cost_usd: float = 0.0
     status: str = "SUCCESS"  # SUCCESS, FALLBACK, or ERROR
     details: Optional[str] = None
+    error_message: Optional[str] = None
 
 
 class TelemetryRecorder:
@@ -73,19 +74,24 @@ class TelemetryRecorder:
 
     def record(
         self,
-        model_id: str,
-        latency_ms: float,
-        input_tokens: int,
-        output_tokens: int,
+        model_id: str | TelemetryRecord,
+        latency_ms: float = 0.0,
+        input_tokens: int = 0,
+        output_tokens: int = 0,
         status: str = "SUCCESS",
         details: Optional[str] = None,
     ) -> TelemetryRecord:
         """Records a new inference metric entry."""
+        if isinstance(model_id, TelemetryRecord):
+            self.records.append(model_id)
+            return model_id
+
+        actual_model_id = str(model_id)
         total_tokens = input_tokens + output_tokens
-        cost = calculate_cost(model_id, input_tokens, output_tokens)
+        cost = calculate_cost(actual_model_id, input_tokens, output_tokens)
 
         entry = TelemetryRecord(
-            model_id=model_id,
+            model_id=actual_model_id,
             latency_ms=round(latency_ms, 2),
             input_tokens=input_tokens,
             output_tokens=output_tokens,

@@ -1,3 +1,11 @@
+# Next.js & Node
+.next/
+out/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -14,16 +22,20 @@ ENV/
 .coverage
 htmlcov/
 
-# Streamlit
+# Streamlit (legacy)
 .streamlit/
 
 # Environment files and credentials
 .env
+.env.local
 credentials.json
 token.json
 
-# IDE
+# IDE & OS
 .idea/
 .vscode/
 *.swp
 *.swo
+.DS_Store
+.impeccable/
+

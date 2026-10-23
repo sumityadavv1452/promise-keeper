@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-canvas: #FFFFFF;
+    --bg-card: #FFFFFF;
+    --border-color: #E5E7EB;
+    --border-hover: #000000;
+    --text-main: #000000;
+    --text-muted: #52525B;
+    --accent-dark: #000000;
+    --accent-dark-text: #FFFFFF;
+    --pill-bg: #FFFFFF;
+    --pill-border: #E5E7EB;
+    --pill-text: #000000;
+    --quote-bg: #FFFFFF;
+    --quote-border: #E5E7EB;
+  }
+
+  .dark {
+    --bg-canvas: #000000;
+    --bg-card: #000000;
+    --border-color: #27272A;
+    --border-hover: #FFFFFF;
+    --text-main: #FFFFFF;
+    --text-muted: #D4D4D8;
+    --accent-dark: #FFFFFF;
+    --accent-dark-text: #000000;
+    --pill-bg: #000000;
+    --pill-border: #27272A;
+    --pill-text: #FFFFFF;
+    --quote-bg: #000000;
+    --quote-border: #27272A;
+  }
+
+  html,
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: rgba(37, 99, 235, 0.25);
+    color: inherit;
+  }
+
+  /* Universal focus-visible accessibility discipline */
+  :focus-visible {
+    outline: 2px solid #2563EB;
+    outline-offset: 2px;
+  }
+
+  /* Monospace typography normalization: prevents macOS Menlo from visually inflating */
+  code, kbd, samp, pre, .font-mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9em;
+  }
+}
+
+/* Custom neat, unobtrusive scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
