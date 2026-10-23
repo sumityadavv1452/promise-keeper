@@ -3,6 +3,8 @@ import { checkBeeDaemonStatus } from '@/lib/bee';
 import { Dispatcher } from '@/lib/dispatcher';
 import { BEDROCK_MODELS } from '@/lib/bedrock';
 
+export const dynamic = 'force-static';
+
 export async function GET() {
   const daemon = checkBeeDaemonStatus();
   const dispatcher = new Dispatcher();
