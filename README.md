@@ -42,9 +42,15 @@ Existing "autonomous AI agents" are too risky—nobody wants an AI sending unrev
 - Bee CLI installed and paired with your wearable
 - AWS Credentials configured with Bedrock access (`us-east-1`)
 
+### 🌐 Live Web Demo
+Experience the interface directly in your browser:  
+👉 **[https://sumityadavv1452.github.io/promise-keeper/](https://sumityadavv1452.github.io/promise-keeper/)**
+
+---
+
 ### 1. Installation
 ```bash
-git clone https://github.com/your-username/promise-keeper.git
+git clone https://github.com/sumityadavv1452/promise-keeper.git
 cd promise-keeper
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
